@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="author" content="Andrew Kim">
+<title>First Frost</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;700;800;900&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+/* =====================================================================
+   FIRST FROST — a Tim Hortons zine, by Andrew Kim
+   Two spreads, built on the two template grids.
+   Every size inside a spread is in cqw (1cqw = 1% of the spread's width).
+   ===================================================================== */
+:root{
+  --red:#C21B2E;     /* Tim Hortons red, from the logo file */
+  --orange:#F4A160;  /* end of the logo's gradient */
+  --fall:linear-gradient(90deg,var(--red) 10%,var(--orange) 90%);
+  --roast:#000;      /* spread 1 background: plain black */
+  --cream:#F4ECDF;   /* paper cup cream, spread 2 */
+  --ink:#1B1210;
+  --milk:#EFE6D9;    /* text on dark */
+  --soft:#B9AA9A;    /* secondary text on dark */
+  --line:.55cqw;
+  --desk:#1a1412;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--desk);color:var(--milk);font-family:"Figtree",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+:focus-visible{outline:2px solid var(--orange);outline-offset:3px}
+
+/* ---------- top bar ---------- */
+.bar{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:16px clamp(16px,3vw,40px);font-size:15px}
+.bar a{color:var(--milk);text-decoration:none}
+.bar a:hover{text-decoration:underline}
+.bar span{color:var(--soft)}
+
+/* ---------- spreads ---------- */
+main{display:flex;flex-direction:column;align-items:center;gap:56px;padding:12px clamp(16px,3vw,40px) 64px}
+.scroll{width:100%;max-width:1400px;overflow-x:auto}
+.spread{position:relative;min-width:860px;aspect-ratio:2/1;container-type:inline-size;overflow:hidden;
+  box-shadow:0 0 0 1px rgba(255,255,255,.05),0 24px 60px rgba(0,0,0,.55)}
+.spread::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:5;
+  background:linear-gradient(90deg,transparent 46%,rgba(0,0,0,.18) 49.4%,rgba(0,0,0,.4) 50%,rgba(255,255,255,.05) 50.6%,transparent 54%)}
+.body p{margin:0 0 .85cqw;font-size:.9cqw;line-height:1.5}
+.body h3{margin:0 0 .35cqw;font:600 1.35cqw/1.05 "Oswald",sans-serif;letter-spacing:.01em;text-transform:uppercase}
+
+/* =================== SPREAD 1 (template: dark magazine) =================== */
+.s1{background:var(--roast);color:var(--milk)}
+.s1 .rule{position:absolute;left:3.4cqw;right:3.4cqw;top:1.9cqw;height:.12cqw;background:var(--soft);opacity:.7}
+.s1 .head{position:absolute;top:2.5cqw;margin:0;font:600 .62cqw/1 "Oswald",sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--soft)}
+.s1 .head.l{left:3.4cqw} .s1 .head.r{right:3.4cqw}
+
+/* vertical type: top-to-bottom, or bottom-to-top with .up */
+.v{position:absolute;margin:0;writing-mode:vertical-rl}
+.v.up{transform:rotate(180deg)}
+.big{font:700 3.3cqw/.95 "Oswald",sans-serif;letter-spacing:.01em;text-transform:uppercase;color:var(--milk)}
+.big em{font-style:normal}
+.small{font:400 1.25cqw/1.15 "Oswald",sans-serif;letter-spacing:.02em;text-transform:uppercase;color:var(--soft)}
+
+/* body text: justified into two balanced columns so each block is a clean rectangle */
+.cols{position:absolute;color:var(--milk)}
+.cols .text{columns:2;column-gap:1.6cqw;column-fill:balance}
+.cols p{margin:0;color:var(--milk);text-align:justify;hyphens:auto;-webkit-hyphens:auto}
+.cols p + p{text-indent:1.4cqw}
+.cols p:last-child{text-align-last:justify}
+/* where the right-hand text ends: the red wordmark on its own, bottom right, on the same line as the left text block */
+.s1 .endlogo{position:absolute;right:3.4cqw;bottom:4.4cqw;width:15cqw;height:auto}
+
+.s1 .colsL{left:3.4cqw;width:30.5cqw;bottom:4.2cqw}
+.s1 .colsR{right:3.4cqw;width:31.5cqw;top:5cqw}
+
+.folio{position:absolute;bottom:1.4cqw;font:500 .7cqw/1 "Oswald",sans-serif;color:var(--soft)}
+.folio::before{content:"";position:absolute;bottom:0;width:.1cqw;height:2.2cqw;background:var(--soft);opacity:.7}
+.folio.l{left:3.9cqw;padding-left:.6cqw} .folio.l::before{left:0}
+.folio.r{right:3.9cqw;padding-right:.6cqw} .folio.r::before{right:0}
+
+/* =================== SPREAD 2 (template: framed, with waves) =================== */
+.s2{background:var(--cream);color:var(--ink)}
+.s2 .frame{position:absolute;inset:3.8cqw 4cqw;border:var(--line) solid var(--ink)}
+.hatch{position:absolute;height:3.4cqw;width:9.5cqw;background:repeating-linear-gradient(115deg,var(--ink) 0 .32cqw,transparent .32cqw 1.05cqw)}
+.waves{position:absolute;border:var(--line) solid var(--ink);overflow:hidden;
+  background:linear-gradient(90deg,var(--red),var(--orange),var(--red));background-size:200% 100%}
+/* the gradient drifts slowly from side to side */
+@keyframes drift{from{background-position:0% 0}to{background-position:100% 0}}
+@media (prefers-reduced-motion:no-preference){.waves{animation:drift 9s ease-in-out infinite alternate}}
+.waves svg{position:absolute;inset:0;width:100%;height:100%}
+.s2 .logo{position:absolute;left:13.5cqw;top:19cqw;width:22cqw;height:auto}
+.s2 .sub{position:absolute;left:13.6cqw;top:25.6cqw;margin:0;font:700 2.6cqw/1 "Oswald",sans-serif;letter-spacing:.01em;text-transform:uppercase}
+.s2 .text{position:absolute;left:52.6cqw;right:6.2cqw;display:grid;grid-template-columns:1fr 1fr;gap:2.4cqw}
+.s2 .text p{color:#3b2a24}
+.s2 .text h3{color:var(--red)}
+</style>
+</head>
+<body>
+
+<nav class="bar" aria-label="Zine">
+  <a href="../../index.html#zines">Back to the book</a>
+  <span>First Frost, Andrew Kim</span>
+</nav>
+
+<main>
+
+  <!-- ========== SPREAD 1: pages 1–2 (dark magazine template) ========== -->
+  <div class="scroll">
+    <section class="spread s1" aria-label="Pages 1 and 2">
+      <span class="rule"></span>
+      <p class="head l">Tim Hortons, Fall 2026</p>
+      <p class="head r">First Frost</p>
+
+      <!-- left page -->
+      <p class="v small" style="left:41.6cqw;top:5cqw">Since 1964,<br>Hamilton, Ontario</p>
+      <div class="cols colsL body">
+        <div class="text">
+          <p>Some brands have to be pushed into autumn. Tim Hortons is already there. It is the red cup in a gloved hand at a bus stop, the drive-through line with the heater on, the box of Timbits on the back seat of a car on the way to a hockey rink at six in the morning. The coffee is not the point. The point is the order, said the same way every morning: a medium Double-Double, two creams and two sugars, no need to explain. It is a small ritual that tells you the day has started and that it will be fine. First Frost takes that ritual and gives it something to hold onto when the weather turns. The name comes from the first morning of the year when the windshield is white and the grass crunches. It is the morning everyone at the counter is wearing a toque for the first time, and the morning the cup feels warmer than it did a week ago. The colours come straight from the brand: Tim Hortons red, fading into the orange of a maple leaf just before it falls. Everything else stays quiet: black, cream, and plain, honest type that you read at a glance.</p>
+        </div>
+      </div>
+      <h2 class="v up big" style="left:37.6cqw;bottom:4.2cqw">Double Double<br><em>Season</em></h2>
+      <span class="folio l">1</span>
+
+      <!-- right page -->
+      <h2 class="v big" style="left:53.6cqw;top:5cqw">Maple,<br><em>by the cup</em></h2>
+      <p class="v small" style="left:58.6cqw;bottom:4.2cqw;transform:rotate(180deg)">Fall merch for<br>a coffee shop</p>
+      <div class="cols colsR body">
+        <div class="text">
+          <p>The collection is four pieces, made for the walk between the car and the door. Nothing is precious. Everything is meant to be used every day until spring and then put away for next year. The toque is knit in Tim Hortons red with a cream cuff, plain except for the wordmark stitched on the fold. It is the hat you grab without looking. The travel mug holds a medium and keeps it hot for the length of a commute; the lid clicks shut, so it can ride in a cup holder over a pothole without a drop on the seat. The Timbits box is printed with falling leaves in red and orange. It is the box that gets passed down a row of bleachers at a Saturday morning game. The cup sleeve is the smallest piece and the one most people will see: a band of cream card around the paper cup, with the waves from the next page printed all the way round. Turn the page for each one, up close.</p>
+        </div>
+      </div>
+      <img class="endlogo" src="tim-logo-red.png" alt="Tim Hortons">
+      <span class="folio r">2</span>
+    </section>
+  </div>
+
+  <!-- ========== SPREAD 2: pages 3–4 (framed template with waves) ========== -->
+  <div class="scroll">
+    <section class="spread s2" aria-label="Pages 3 and 4">
+      <span class="frame"></span>
+      <span class="hatch" style="left:21.6cqw;top:4.4cqw"></span>
+      <span class="hatch" style="left:20.2cqw;bottom:4.4cqw"></span>
+
+      <!-- small wave box on the left edge, and the long wave band -->
+      <div class="waves" style="left:4cqw;top:17.4cqw;width:7.6cqw;height:16.4cqw"><svg aria-hidden="true"></svg></div>
+      <div class="waves" style="left:43.6cqw;right:4cqw;top:17.4cqw;height:16.4cqw"><svg aria-hidden="true"></svg></div>
+
+      <!-- the logo file you supplied -->
+      <img class="logo" src="tim-logo-red.png" alt="Tim Hortons">
+      <p class="sub">First Frost collection</p>
+
+      <div class="text body" style="top:5.6cqw">
+        <div>
+          <h3>The toque</h3>
+          <p>Knit in Tim Hortons red with a cream cuff, the wordmark stitched on the fold. Warm enough for a bus stop in November, plain enough to wear every day until March.</p>
+        </div>
+        <div>
+          <h3>The travel mug</h3>
+          <p>Holds a medium Double-Double and keeps it hot for a whole commute. A click-shut lid, a cream body and one red band near the top where your hand goes.</p>
+        </div>
+      </div>
+      <div class="text body" style="top:35.6cqw">
+        <div>
+          <h3>The Timbits box</h3>
+          <p>Printed with falling leaves that fade from red to orange across the lid. Sized for a team: passed down the bleachers at a Saturday morning game and empty by the second period.</p>
+        </div>
+        <div>
+          <h3>The cup sleeve</h3>
+          <p>A cream band around the paper cup with the waves printed all the way round. The smallest piece in the collection, and the one most people will see.</p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+</main>
+
+<script>
+  // waves: smooth black lines drawn across each band (one path per line, no tile seams)
+  function drawWaves(){
+    document.querySelectorAll('.waves svg').forEach(svg => {
+      const w = svg.clientWidth, h = svg.clientHeight;
+      const gap = h / 5.4, amp = gap * .32, len = gap * 3.4, sw = gap * .13;
+      svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
+      let d = '';
+      for (let y = gap * .55; y < h + gap; y += gap) {
+        d += `M${-len} ${y}`;
+        for (let x = -len; x < w + len; x += len) {
+          d += ` C${x + len * .25} ${y - amp * 1.33},${x + len * .25} ${y - amp * 1.33},${x + len / 2} ${y}`;
+          d += ` S${x + len * .75} ${y + amp * 1.33},${x + len} ${y}`;
+        }
+      }
+      svg.innerHTML = `<path d="${d}" fill="none" stroke="#1B1210" stroke-width="${sw}" stroke-linecap="round"/>`;
+    });
+  }
+  drawWaves();
+  addEventListener('resize', drawWaves);
+</script>
+</body>
+</html>

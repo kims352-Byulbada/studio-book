@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Zine coming soon</title>
+<meta name="author" content="Member 4">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* =====================================================================
+   PLACEHOLDER ZINE PAGE
+   Replace this whole file with your own zine (keep the name index.html).
+   Set <title> to your zine title and <meta name="author"> to your name: they become the caption.
+   Keep a "Back to the book" link pointing to ../../index.html#zines
+   so people can get back to the strip.
+   ===================================================================== */
+*{box-sizing:border-box}
+body{margin:0;min-height:100dvh;background:#f4f3ef;color:#1a1a1a;font-family:"Schibsted Grotesk",system-ui,sans-serif;display:flex;flex-direction:column}
+.bar{display:flex;justify-content:space-between;gap:16px;padding:16px clamp(16px,3vw,40px);font-size:15px}
+.bar a{color:#1a1a1a;text-decoration:none}
+.bar a:hover{text-decoration:underline}
+.bar span{color:#8b8b8b}
+:focus-visible{outline:2px solid #1a1a1a;outline-offset:3px}
+main{flex:1;display:grid;place-items:center;padding:24px clamp(16px,3vw,40px) 64px}
+.spread{width:min(100%,1100px);aspect-ratio:2/1;border:2px dashed #b9b8b2;display:grid;place-items:center;text-align:center;padding:24px}
+h1{margin:0 0 10px;font-size:clamp(28px,4vw,48px);font-weight:600;letter-spacing:-.02em}
+p{margin:0 auto;max-width:44ch;font-size:16px;line-height:1.5;color:#6b6b6b}
+</style>
+</head>
+<body>
+  <nav class="bar" aria-label="Zine">
+    <a href="../../index.html#zines">Back to the book</a>
+    <span>Zine coming soon</span>
+  </nav>
+  <main>
+    <div class="spread">
+      <div>
+        <h1>This zine is on its way.</h1>
+        <p>Replace this page and thumb.jpg in this folder with your own zine. The steps are in HOW-TO-ADD-YOUR-ZINE.md.</p>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="author" content="Andrew Kim">
+<title>Fall Wrapped</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* =====================================================================
+   FALL WRAPPED — a Spotify zine, by Andrew Kim
+   Two spreads, built on the two mockup grids.
+   Every size inside a spread is in cqw (1cqw = 1% of the spread's width),
+   so the whole spread scales like one printed page.
+   ===================================================================== */
+:root{
+  --green:#1ED760;   /* Spotify green */
+  --black:#000;      /* the grid lines and blocks */
+  --dark:#121212;    /* Spotify's background black */
+  --grey:#282828;    /* record grooves */
+  --white:#fff;
+  --orange:#F57C1F;  /* autumn orange */
+  --fall:linear-gradient(90deg,var(--green) 10%,var(--orange) 90%);   /* green → orange, used by every dot field and the record label */
+  --text:#e6e6e6;    /* body text on black */
+  --soft:#a7a7a7;    /* secondary text */
+  --rule:#3a3a3a;    /* the grid lines */
+  --line:.55cqw;     /* thickness of the grid lines */
+  --desk:#000;       /* behind the zine */
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--desk);color:var(--text);font-family:"Figtree",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+:focus-visible{outline:2px solid var(--green);outline-offset:3px}
+
+/* ---------- top bar ---------- */
+.bar{display:flex;justify-content:space-between;align-items:center;gap:16px;
+  padding:16px clamp(16px,3vw,40px);font-size:15px}
+.bar a{color:var(--white);text-decoration:none}
+.bar a:hover{text-decoration:underline}
+.bar span{color:var(--soft)}
+
+/* ---------- spreads ---------- */
+main{display:flex;flex-direction:column;align-items:center;gap:56px;padding:12px clamp(16px,3vw,40px) 64px}
+.scroll{width:100%;max-width:1400px;overflow-x:auto}          /* phones scroll the spread sideways instead of shrinking the text */
+.spread{position:relative;min-width:860px;aspect-ratio:2/1;container-type:inline-size;
+  box-shadow:0 0 0 1px #1f1f1f,0 24px 60px rgba(0,0,0,.6)}
+.spread::after{content:"";position:absolute;inset:0;pointer-events:none;     /* the fold in the middle */
+  background:linear-gradient(90deg,transparent 46%,rgba(0,0,0,.25) 49.4%,rgba(0,0,0,.55) 50%,rgba(255,255,255,.04) 50.6%,transparent 54%)}
+.pages{position:absolute;left:50%;bottom:-30px;transform:translateX(-50%);font-size:13px;color:#6b6b6b;white-space:nowrap}
+
+/* the black grid: black background + gaps, so every gap reads as a thick line */
+.frame{position:absolute;inset:3.6cqw 2.6cqw;display:grid;gap:var(--line);padding:var(--line);background:var(--rule)}
+.col{display:grid;gap:var(--line);min-height:0}
+.cell{position:relative;overflow:hidden;min-width:0;min-height:0;background:var(--dark)}
+
+/* shared pieces */
+.title{color:var(--green);display:grid;place-items:center;margin:0;
+  font-size:1.75cqw;font-weight:900;letter-spacing:-.01em;text-transform:uppercase;line-height:1;white-space:nowrap}
+/* dot fields: one green → orange gradient seen through the dots,
+   so each dot is a single colour and the colour changes from dot to dot */
+.dots::before{content:"";position:absolute;inset:0;background:var(--fall);
+  -webkit-mask:radial-gradient(circle,#000 0 .26cqw,transparent .3cqw) 1.15cqw 1.15cqw/2.3cqw 2.3cqw;
+          mask:radial-gradient(circle,#000 0 .26cqw,transparent .3cqw) 1.15cqw 1.15cqw/2.3cqw 2.3cqw}
+.dots > *{z-index:1}
+.body{font-size:.98cqw;line-height:1.5}
+.body p{margin:0 0 .9cqw;color:var(--soft)}
+.body h3{color:var(--green);margin:0 0 .3cqw;font-size:1.5cqw;font-weight:800;line-height:1.1;letter-spacing:-.01em}
+.body .what{display:block;margin-bottom:.9cqw;font-size:.98cqw;font-weight:700;color:var(--white)}
+
+/* =================== SPREAD 1 (pages 1–2) =================== */
+.s1{background:var(--dark)}
+.s1 .frame{grid-template-columns:16fr 82fr}
+.s1 .left{grid-template-rows:13fr 40fr 47fr}
+.s1 .right{grid-template-rows:1fr 1fr}
+.s1 .bottom{grid-template-columns:37fr 63fr}
+
+/* black block: the record, spinning slowly */
+@keyframes spin{to{transform:translateY(-50%) rotate(360deg)}}
+.record{position:absolute;left:1.4cqw;top:50%;width:12.6cqw;aspect-ratio:1;transform:translateY(-50%);border-radius:50%;
+  background:repeating-radial-gradient(circle,var(--grey) 0 .14cqw,#0b0b0b .14cqw .42cqw)}
+/* label in the same green → orange, with the spindle hole on top */
+.record::after{content:"";position:absolute;inset:4.1cqw;border-radius:50%;
+  background:radial-gradient(circle,var(--black) 0 .32cqw,transparent .36cqw),var(--fall)}
+@media (prefers-reduced-motion:no-preference){.record{animation:spin 4s linear infinite}}
+
+.say{color:var(--white);display:flex;align-items:center;padding:0 1.4cqw}
+.say p{margin:0;font-size:2.55cqw;font-weight:800;line-height:1.08;letter-spacing:-.02em}
+
+/* dotted band */
+.sticker{position:absolute;display:grid;place-items:center;text-align:center;border-radius:50%;font-weight:800;line-height:1}
+.band .sticker{left:7cqw;top:50%;width:11.5cqw;height:11.5cqw;margin-top:-5.75cqw;background:var(--green);color:var(--black);
+  font-size:1.55cqw;transform:rotate(-12deg)}
+.band .big{position:absolute;right:3cqw;bottom:2cqw;margin:0;color:var(--white);font-size:6.4cqw;font-weight:900;line-height:.85;letter-spacing:-.04em;text-align:right}
+
+/* the logo block */
+.logo-box{display:grid;place-items:center;padding:3cqw}
+.logo-box .logo{position:absolute;inset:2.6cqw;width:calc(100% - 5.2cqw);height:calc(100% - 5.2cqw);object-fit:contain}
+.logo-box .logo-slot{width:78%;height:70%;display:grid;place-items:center;border:.18cqw dashed var(--green);color:var(--green);font-size:1cqw;font-weight:700}
+
+.intro{padding:2.2cqw 2.6cqw 2cqw 3.6cqw;display:grid;grid-template-columns:1fr 1fr;gap:2.4cqw}
+
+/* =================== SPREAD 2 (pages 3–4) =================== */
+.s2{background:var(--dark)}
+.s2 .frame{grid-template-columns:20.5fr 77.5fr}
+.s2 .left{grid-template-rows:12fr 44fr 44fr}
+/* columns are set so the gap between the 1st and 2nd falls on the fold */
+.s2 .side{padding:2.4cqw 2.4cqw 2cqw 2.4cqw;display:grid;grid-template-columns:22.4cqw 1fr 1fr;gap:3cqw}
+
+/* track list */
+.tracks{margin:0 0 .9cqw;padding:0 0 0 1.6cqw;color:var(--white);font-weight:700;line-height:1.75}
+.tracks li::marker{color:var(--green);font-weight:800}
+
+/* photos from the mockup */
+.shot{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+
+</style>
+</head>
+<body>
+
+<nav class="bar" aria-label="Zine">
+  <a href="../../index.html#zines">Back to the book</a>
+  <span>Fall Wrapped, Andrew Kim</span>
+</nav>
+
+<main>
+
+  <!-- ========== SPREAD 1: pages 1–2 (mockup 1) ========== -->
+  <div class="scroll">
+    <section class="spread s1" aria-label="Pages 1 and 2">
+      <div class="frame">
+        <div class="col left">
+          <h1 class="cell title">Fall Wrapped</h1>
+          <div class="cell record-box" aria-hidden="true"><span class="record"></span></div>
+          <div class="cell say"><p>Your autumn, on repeat.</p></div>
+        </div>
+
+        <div class="col right">
+          <div class="cell band dots">
+            <span class="sticker">On repeat<br>since<br>September</span>
+            <p class="big">Spotify<br>Fall 2026</p>
+          </div>
+
+          <div class="col bottom">
+            <!-- Put the official Spotify logo file next to this page and name it spotify-logo.png
+                 (the green or white version reads best on black) -->
+            <div class="cell logo-box">
+              <img class="logo" src="spotify-logo.png" alt="Spotify" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'logo-slot',textContent:'spotify-logo.png'}))">
+            </div>
+
+            <div class="cell intro body">
+              <div>
+                <p>Spotify has no season. It sounds the same in July as it does in November. Fall Wrapped asks what happens when a brand made of streams starts making things you can hold.</p>
+                <p>The answer here is a record: a playlist pressed onto something you can hold.</p>
+                <p>Every fall, people make the same kind of playlist: cozy, a little sad, made for rain. Fall Wrapped gives that playlist a cover, a weight and a place on the shelf.</p>
+              </div>
+              <div>
+                <p>The palette stays Spotify's own black and green, with one orange borrowed from the season outside.</p>
+                <p>One piece: a 12-inch record called Sweater Weather Sessions. Turn the page for the sleeve, the record and the songs.</p>
+                <p>The dots on these pages are the same dots on the sleeve. Green where the season starts, orange where it ends.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <p class="pages" hidden>Pages 1–2</p>
+  </div>
+
+  <!-- ========== SPREAD 2: pages 3–4 (mockup 2) ========== -->
+  <div class="scroll">
+    <section class="spread s2" aria-label="Pages 3 and 4">
+      <div class="frame">
+        <div class="col left">
+          <h2 class="cell title">The record</h2>
+          <div class="cell"><img class="shot" src="images/sleeve-detail.jpg" alt="Close-up of a black record sleeve reading Sweater Weather Sessions over green-to-orange dots"></div>
+          <div class="cell"><img class="shot" src="images/lp-detail.jpg" alt="Close-up of the record sliding out of the sleeve, with a green-to-orange label"></div>
+        </div>
+
+        <div class="cell side body">
+          <div>
+            <h3>Sweater Weather Sessions</h3>
+            <span class="what">The sleeve</span>
+            <p>A 12-inch sleeve in Spotify black. The title sits in heavy white type, stacked over three lines, with the last word in the same green as the play button. It is the only colour on the sleeve that comes straight from the app.</p>
+            <p>The lower half is a field of dots. They start green on the left and turn orange on the right, one shade at a time, the way the trees outside turn over a few weeks in October. No single dot is a gradient; the change only shows when you step back and look at all of them together.</p>
+            <p>Nothing else is printed on the front. No photo, no artist, no barcode. You know whose record it is from the colours alone, the same way you can spot a Spotify screen from across a room.</p>
+            <p>The back carries the track list in the app's own layout: the title first, a short line underneath, and nothing else.</p>
+          </div>
+          <div>
+            <h3>Green to orange</h3>
+            <span class="what">The record</span>
+            <p>Black vinyl, pressed at 33⅓. The centre label carries the same green-to-orange gradient as the dots on the sleeve, so the record and its cover read as one object, even when they are apart.</p>
+            <p>When the record spins, the colour on the label moves round and round: green, then orange, then green again. It is the closest a record can get to the repeat button, a season playing on a loop.</p>
+            <p>Side A is for the walk to class in the morning, when the air is cold and the light is low. Side B is for the walk home, when it is already dark at five and the street lights are on.</p>
+            <p>The record slides out of the sleeve to the right, the same direction you swipe to skip to the next song.</p>
+          </div>
+          <div>
+            <h3>Side A</h3>
+            <span class="what">The songs</span>
+            <ol class="tracks">
+              <li>First Cold Morning</li>
+              <li>Leaf Peeping</li>
+              <li>Rain on the Window</li>
+              <li>Walk to Class</li>
+              <li>Sweater Weather</li>
+              <li>Dark at Five</li>
+            </ol>
+            <p>Each title is also a playlist in the app, so the record and the phone play the same autumn. Put the needle down at home, then pick up the same mood on the train.</p>
+            <p>The order follows one day in November, from the first cold morning to the walk home in the dark. Sweater Weather sits near the end, the one hour of the day when it finally feels warm.</p>
+            <p>Six songs a side, about twenty minutes each. Long enough for one cup of coffee, short enough that you turn the record over before it gets cold.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+</main>
+
+</body>
+</html>

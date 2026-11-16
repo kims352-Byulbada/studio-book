@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Studio Name</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="book.css">
+
+<!-- Book settings.
+     pageWidth / pageHeight = the size you design ONE page at, in px.
+     850 × 1100 is 8.5 × 11 in. Change both to match your InDesign / Figma page. -->
+<script>
+  window.BOOK = {
+    pageWidth: 850,
+    pageHeight: 1100,
+    fill: 1,          // 1 = as big as the screen allows, 0.9 = a bit smaller
+    tilt: 16,         // how far the book leans back, in degrees (0 = flat)
+    editButton: true  // show the Edit button (set to false when the site is finished; E still works)
+  };
+
+  /* The zines, in order. Each one is a folder in zines/ with two files:
+       index.html  the zine itself (its <title> and <meta name="author"> become the caption)
+       thumb.jpg   a wide 2:1 picture, used on the moving strip and on the zine's own spread in the book
+     The title/by here are only shown until the zine's own page is read (or when you open the site from your computer).
+     See HOW-TO-ADD-YOUR-ZINE.md. */
+  window.ZINE_SLOTS = [
+    { slot: "spotify",     title: "Fall Wrapped",      by: "Andrew Kim" },
+    { slot: "tim-hortons", title: "First Frost",       by: "Andrew Kim" },
+    { slot: "member1",     title: "Zine coming soon",  by: "Member 1" },
+    { slot: "member2",     title: "Zine coming soon",  by: "Member 2" },
+    { slot: "member3",     title: "Zine coming soon",  by: "Member 3" },
+    { slot: "member4",     title: "Zine coming soon",  by: "Member 4" }
+  ];
+
+</script>
+
+<style>
+  /* ===== Your page styles go here =====
+     Every page is drawn at pageWidth × pageHeight px and scaled to fit the screen,
+     so write sizes in px exactly as they are in your design file. */
+
+  /* ---- pages 4–5: zines strip ---- */
+  .zines-title{position:absolute;left:64px;top:56px;margin:0;font-size:150px;font-weight:600;line-height:.9;letter-spacing:-.045em}
+  .zines-intro{position:absolute;left:64px;top:230px;width:470px;margin:0;font-size:22px;line-height:1.4}
+  .zines-note{position:absolute;right:64px;top:64px;width:380px;margin:0;font-size:22px;line-height:1.4;text-align:right}
+  .zines-hint{position:absolute;left:64px;bottom:64px;margin:0;font-size:15px;color:var(--mute)}
+  .page zine-band{top:400px}
+  /* one spread per zine: the thumbnail runs across both pages */
+  .zine-l .zine-img,.zine-r .zine-img{position:absolute;top:150px;width:1572px;height:786px;object-fit:cover;max-width:none}
+  .zine-l .zine-img{left:64px}
+  .zine-r .zine-img{left:-786px}
+  .zine-cap{position:absolute;left:64px;top:972px;margin:0}
+  .zine-cap .zt{display:block;font-size:40px;font-weight:600;letter-spacing:-.02em;line-height:1}
+  .zine-cap .zb{display:block;margin-top:8px;font-size:22px;color:var(--mute)}
+  .zine-open{position:absolute;right:64px;top:976px;font-size:22px;color:var(--ink);text-decoration:none;border:1.5px solid var(--ink);border-radius:999px;padding:10px 24px}
+  .zine-open:hover{background:var(--ink);color:var(--sheet)}
+  .page zine-count{position:absolute;right:64px;bottom:64px;font-size:15px;color:var(--mute)}
+
+  /* opened zine */
+  .zine-viewer{width:100vw;height:100dvh;max-width:none;max-height:none;margin:0;padding:24px clamp(16px,4vw,48px);
+    border:0;background:rgba(20,20,20,.94);color:#fcfcfa;font-family:var(--font)}
+  .zine-viewer[open]{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px}
+  .zine-viewer::backdrop{background:transparent}
+  .zine-viewer figure{margin:0;display:flex;flex-direction:column;align-items:center;gap:14px;min-height:0}
+  .zine-viewer img{display:block;max-width:min(92vw,1100px);max-height:74dvh;object-fit:contain}
+  .zine-viewer .zv-ph{width:min(60vw,420px);aspect-ratio:.72;background:#ecebe6;color:#1a1a1a;display:flex;align-items:flex-end;
+    padding:24px;font-size:34px;font-weight:600;letter-spacing:-.02em}
+  .zine-viewer .zv-ph[hidden],.zine-viewer img[hidden]{display:none}
+  .zine-viewer figcaption{text-align:center;font-size:16px;line-height:1.4}
+  .zine-viewer .zv-pic{display:block;color:inherit;text-decoration:none;cursor:pointer}
+  .zine-viewer .zv-pic:not([href]){cursor:default}
+  .zv-nav .zv-open{margin-left:16px;padding:8px 16px;border-radius:999px;background:#fcfcfa;color:#1a1a1a;text-decoration:none}
+  .zv-nav .zv-open:hover{background:#fff}
+  .zv-nav .zv-open[hidden]{display:none}
+  .zine-viewer figcaption span{display:block;color:#a3a3a3}
+  .zv-nav{display:flex;align-items:center;gap:8px;font-size:15px;font-variant-numeric:tabular-nums}
+  .zv-nav button{border:0;background:none;color:inherit;font:inherit;padding:8px 12px;cursor:pointer;border-radius:999px}
+  .zv-nav button:hover{background:rgba(255,255,255,.1)}
+  .zv-nav .zv-n{color:#a3a3a3;min-width:5ch;text-align:center}
+  .zv-nav .zv-close{margin-left:8px;border:1px solid rgba(255,255,255,.4)}
+  .zine-viewer :focus-visible{outline:2px solid #fcfcfa;outline-offset:3px}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <!-- Studio name. Swap the text for a logo if you like: <img src="images/logo.svg" alt="Studio Name"> -->
+  <a class="wordmark" href="#" data-home>Studio Name</a>
+  <nav aria-label="Sections">
+    <!-- Links are added automatically from the <section data-title="…"> blocks below.
+         For an extra link (Instagram, etc.) add an <li><a href="…">…</a></li> here. -->
+    <ul id="nav-links"></ul>
+  </nav>
+  <button class="menu-btn" type="button" aria-expanded="false" aria-controls="nav-links">Menu</button>
+</header>
+
+<!-- =======================================================================
+  BOOK PAGES
+
+  - Each <article class="page"> is one page, in reading order.
+  - The first page is the front cover, the last page is the back cover.
+    Right-hand pages are odd (1, 3, 5 …), left-hand pages are even (2, 4, 6 …).
+  - A <section data-title="…"> groups pages and becomes a link in the nav bar.
+    Rename, reorder, add or delete sections and pages freely.
+  - If the total number of pages is odd, a blank page is added before the back cover.
+  - Press G on the site to see page numbers and 64 px margins on every page.
+
+  WHAT YOU CAN PUT ON A PAGE
+    Blank      <article class="page"></article>
+    Image      <article class="page" data-image="images/07.jpg"></article>
+               add data-fit="contain" to show the whole image instead of filling the page
+    Spread     <article class="page" data-spread="images/spread-03.jpg"></article>
+               one image across two pages; put it on a LEFT-hand page,
+               it continues onto the next page by itself
+    Video      <article class="page" data-video="images/reel.mp4"></article>
+    Anything   write HTML inside the article, in px for an 850 × 1100 page:
+               <article class="page" style="background:#ff4d00">
+                 <h2 style="position:absolute; left:64px; top:64px; font-size:96px">Hello</h2>
+               </article>
+    Cover look add class "cover":  <article class="page cover"></article>
+
+    Page CSS   a <style> inside an article only affects that page:
+               <article class="page">
+                 <style> h2 { font-size:120px; color:#ff4d00 } </style>
+                 <h2>Only this page is orange</h2>
+               </article>
+
+  Links and buttons inside a page work as usual; clicking anywhere else turns the page.
+  Link to a page from anywhere with href="#page-7", or to a section with href="#work".
+
+  EDIT MODE  (Edit button at the bottom right, or press E)
+    Pick a page, then Add text / Add image / Page image / Background, or open Code
+    to edit that page's HTML directly. Drag text and images to move them.
+    Edits are kept in your browser only. Export > Download index.html gives you
+    the new file; replace this one with it and share it with the team.
+======================================================================== -->
+<div id="book-pages" hidden>
+
+  <!-- front cover -->
+  <article class="page cover"></article>
+
+  <!-- Overview: the studio at a glance -->
+  <section id="overview" data-title="Overview">
+    <article class="page"></article>
+    <article class="page"></article>
+  </section>
+
+  <!-- Zines: pages 4–5 are the moving strip (the two <zine-band> tags draw one strip across both pages),
+       then one spread per zine. The list of zines is window.ZINE_SLOTS at the top of this file. -->
+  <section id="zines" data-title="Zines">
+    <article class="page">
+      <h2 class="zines-title">Zines</h2>
+      <p class="zines-intro">Fall merch zines from everyone in the studio, on one loop. Click a zine to open it.</p>
+      <zine-band offset="0"></zine-band>
+      <p class="zines-hint">Hover to pause. Click a zine to open it.</p>
+    </article>
+    <article class="page">
+      <p class="zines-note">Autumn 2026.</p>
+      <zine-band offset="850"></zine-band>
+      <zine-count></zine-count>
+    </article>
+
+    <!-- zine: spotify -->
+    <article class="page zine-l" data-zine="spotify">
+      <img class="zine-img" src="zines/spotify/thumb.jpg" alt="">
+      <p class="zine-cap"><b class="zt">Fall Wrapped</b><span class="zb">Andrew Kim</span></p>
+    </article>
+    <article class="page zine-r" data-zine="spotify">
+      <img class="zine-img" src="zines/spotify/thumb.jpg" alt="">
+      <a class="zine-open" href="zines/spotify/index.html">Open zine</a>
+    </article>
+
+    <!-- zine: tim-hortons -->
+    <article class="page zine-l" data-zine="tim-hortons">
+      <img class="zine-img" src="zines/tim-hortons/thumb.jpg" alt="">
+      <p class="zine-cap"><b class="zt">First Frost</b><span class="zb">Andrew Kim</span></p>
+    </article>
+    <article class="page zine-r" data-zine="tim-hortons">
+      <img class="zine-img" src="zines/tim-hortons/thumb.jpg" alt="">
+      <a class="zine-open" href="zines/tim-hortons/index.html">Open zine</a>
+    </article>
+
+    <!-- zine: member1 -->
+    <article class="page zine-l" data-zine="member1">
+      <img class="zine-img" src="zines/member1/thumb.jpg" alt="">
+      <p class="zine-cap"><b class="zt">Zine coming soon</b><span class="zb">Member 1</span></p>
+    </article>
+    <article class="page zine-r" data-zine="member1">
+      <img class="zine-img" src="zines/member1/thumb.jpg" alt="">
+      <a class="zine-open" href="zines/member1/index.html">Open zine</a>
+    </article>
+
+    <!-- zine: member2 -->
+    <article class="page zine-l" data-zine="member2">
+      <img class="zine-img" src="zines/member2/thumb.jpg" alt="">
+      <p class="zine-cap"><b class="zt">Zine coming soon</b><span class="zb">Member 2</span></p>
+    </article>
+    <article class="page zine-r" data-zine="member2">
+      <img class="zine-img" src="zines/member2/thumb.jpg" alt="">
+      <a class="zine-open" href="zines/member2/index.html">Open zine</a>
+    </article>
+
+    <!-- zine: member3 -->
+    <article class="page zine-l" data-zine="member3">
+      <img class="zine-img" src="zines/member3/thumb.jpg" alt="">
+      <p class="zine-cap"><b class="zt">Zine coming soon</b><span class="zb">Member 3</span></p>
+    </article>
+    <article class="page zine-r" data-zine="member3">
+      <img class="zine-img" src="zines/member3/thumb.jpg" alt="">
+      <a class="zine-open" href="zines/member3/index.html">Open zine</a>
+    </article>
+
+    <!-- zine: member4 -->
+    <article class="page zine-l" data-zine="member4">
+      <img class="zine-img" src="zines/member4/thumb.jpg" alt="">
+      <p class="zine-cap"><b class="zt">Zine coming soon</b><span class="zb">Member 4</span></p>
+    </article>
+    <article class="page zine-r" data-zine="member4">
+      <img class="zine-img" src="zines/member4/thumb.jpg" alt="">
+      <a class="zine-open" href="zines/member4/index.html">Open zine</a>
+    </article>
+  </section>
+
+  <!-- About: who the studio is and how it works -->
+  <section id="about" data-title="About">
+    <article class="page"></article>
+    <article class="page"></article>
+  </section>
+
+  <!-- Work: one spread (2 pages) per project -->
+  <section id="work" data-title="Work">
+    <article class="page"></article>
+    <article class="page"></article>
+    <article class="page"></article>
+    <article class="page"></article>
+    <article class="page"></article>
+    <article class="page"></article>
+    <article class="page"></article>
+    <article class="page"></article>
+  </section>
+
+  <!-- People: the team -->
+  <section id="people" data-title="People">
+    <article class="page"></article>
+    <article class="page"></article>
+    <article class="page"></article>
+    <article class="page"></article>
+  </section>
+
+  <!-- Clients: brands and studios the studio has worked with -->
+  <section id="clients" data-title="Clients">
+    <article class="page"></article>
+    <article class="page"></article>
+  </section>
+
+  <!-- Contact: address, email, social -->
+  <section id="contact" data-title="Contact">
+    <article class="page"></article>
+    <article class="page"></article>
+  </section>
+
+  <!-- back cover -->
+  <article class="page cover"></article>
+
+</div>
+
+<script src="book.js"></script>
+<!-- Zines strip on pages 4–5 (moving photos). Must stay after book.js. -->
+<script>
+/* =====================================================================
+   ZINE BAND  —  pages 4–5
+   A strip of zine photos that loops across the spread, over the spine.
+
+   The strip shows zines/<slot>/thumb.jpg for every entry in window.ZINE_SLOTS.
+   See HOW-TO-ADD-YOUR-ZINE.md.
+
+   Tags used in index.html:
+     <zine-band offset="0">    the strip on the left page (page 4)
+     <zine-band offset="850">  the same strip on the right page (page 5),
+                               shifted by one page width so it reads as one strip
+     <zine-count>              "6 zines"
+
+   Everything is drawn inside a shadow root, so Edit mode / Export
+   in book.js never copies the photos into index.html.
+   ===================================================================== */
+(function () {
+  'use strict';
+
+  const PAGE_W = (window.BOOK && window.BOOK.pageWidth) || 850;
+  const SPEED = 60;          // px per second (in page px)
+  const IMG_H = 380;         // photo height in page px
+  const GAP = 28;            // space between zines
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- 1. the list of zines ---------- */
+  // one entry per folder in zines/ (window.ZINE_SLOTS at the top of this file)
+  let list = (window.ZINE_SLOTS || []).map(z => ({
+    slot: z.slot, title: z.title || 'Zine', by: z.by || '',
+    src: 'zines/' + z.slot + '/thumb.jpg', link: 'zines/' + z.slot + '/index.html'
+  }));
+  const listeners = new Set();
+  const changed = () => listeners.forEach(fn => fn());
+
+  // caption = the zine page's own <title> and <meta name="author">, so each person only edits their own folder
+  async function readTitles() {
+    await Promise.all(list.map(async z => {
+      try {
+        const res = await fetch(z.link, { cache: 'no-cache' });
+        if (!res.ok) return;
+        const doc = new DOMParser().parseFromString(await res.text(), 'text/html');
+        const t = doc.querySelector('title'), a = doc.querySelector('meta[name="author"]');
+        if (t && t.textContent.trim()) z.title = t.textContent.trim();
+        if (a && a.content.trim()) z.by = a.content.trim();
+      } catch (e) { /* opened from the computer: keep the names in ZINE_SLOTS */ }
+    }));
+    list = list.slice();
+    changed();
+    fillPages();
+  }
+  // captions on each zine's spread in the book
+  function fillPages() {
+    document.querySelectorAll('.zine-l[data-zine]').forEach(p => {
+      const z = list.find(x => x.slot === p.dataset.zine);
+      if (!z) return;
+      p.querySelector('.zt').textContent = z.title;
+      p.querySelector('.zb').textContent = z.by;
+      p.querySelectorAll('.zine-img').forEach(im => { im.alt = z.title + ' by ' + z.by; });
+    });
+  }
+
+  /* ---------- 2. shared clock so both pages move together ---------- */
+  let pos = 0, last = performance.now(), paused = 0, setW = 1;
+  const bands = new Set();
+  function tick(now) {
+    const dt = Math.min(0.05, (now - last) / 1000);
+    last = now;
+    const visible = [...bands].some(b => b.isVisible());
+    if (!reduce && !paused && visible) pos = (pos + dt * SPEED) % setW;
+    bands.forEach(b => b.place(pos));
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+
+  /* ---------- 3. <zine-band> ---------- */
+  const bandCSS = `
+    :host{display:block;position:absolute;left:0;width:${PAGE_W}px;height:${IMG_H + 90}px;overflow:hidden}
+    .track{position:absolute;top:0;left:0;display:flex;gap:${GAP}px;will-change:transform}
+    figure{margin:0;flex:none;cursor:zoom-in}
+    .ph{display:block;height:${IMG_H}px;background:#ecebe6;outline:.5px solid rgba(0,0,0,.08)}
+    img.ph{object-fit:cover}
+    div.ph{display:flex;align-items:flex-end;padding:22px;box-sizing:border-box;
+      font:600 30px/1 var(--font);letter-spacing:-.02em;color:#1a1a1a}
+    figcaption{padding-top:14px;font:15px/1.35 var(--font);color:var(--ink,#1a1a1a);white-space:nowrap}
+    figcaption span{display:block;color:var(--mute,#8b8b8b)}
+    figure:focus-visible{outline:2px solid #1a1a1a;outline-offset:4px}`;
+
+  class ZineBand extends HTMLElement {
+    connectedCallback() {
+      if (this._ready) return;
+      this._ready = true;
+      this.setAttribute('data-no-turn', '');   // clicks here open a zine instead of turning the page
+      const root = this.attachShadow({ mode: 'open' });
+      root.innerHTML = '<style>' + bandCSS + '</style><div class="track"></div>';
+      this.track = root.querySelector('.track');
+      this.offset = +this.getAttribute('offset') || 0;
+
+      this.addEventListener('pointerenter', () => paused++);
+      this.addEventListener('pointerleave', () => { paused = Math.max(0, paused - 1); });
+      this.track.addEventListener('click', e => {
+        const f = e.target.closest('figure[data-i]');
+        if (f) openViewer(+f.dataset.i);
+      });
+      this.track.addEventListener('keydown', e => {
+        const f = e.target.closest('figure[data-i]');
+        if (f && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); e.stopPropagation(); openViewer(+f.dataset.i); }
+      });
+
+      this.render = this.render.bind(this);
+      listeners.add(this.render);
+      bands.add(this);
+      this.render();
+    }
+    disconnectedCallback() { listeners.delete(this.render); bands.delete(this); }
+
+    isVisible() { const f = this.closest('.face'); return !f || !f.inert; }
+
+    async render() {
+      const now = list;
+      const PH_W = Math.round(IMG_H * .72);
+      if (!now.length) { this.track.innerHTML = '<figure><div class="ph" style="width:' + PH_W + 'px">No zines yet</div></figure>'; setW = PH_W + GAP; return; }
+      // work out each photo's width ourselves (height is fixed), so the loop length is exact
+      const widths = await Promise.all(now.map(z => z.src ? photoWidth(z.src, PH_W) : PH_W));
+      if (now !== list) return;                  // the list changed while we waited
+      const one = now.map((z, i) => {
+        const pic = z.src
+          ? `<img class="ph" src="${esc(z.src)}" alt="" draggable="false" style="width:${widths[i]}px">`
+          : `<div class="ph" style="width:${widths[i]}px">${esc(z.title || 'Zine')}</div>`;
+        return `<figure data-i="${i}" role="button" style="width:${widths[i]}px">${pic}` +
+               `<figcaption>${esc(z.title || 'Untitled')}<span>${esc(z.by || '')}</span></figcaption></figure>`;
+      }).join('');
+
+      setW = widths.reduce((a, w) => a + w + GAP, 0);   // length of one full set
+      // repeat the set until it covers both pages plus one more, so the loop never shows a gap
+      const copies = Math.ceil((PAGE_W * 2 + setW) / setW) + 1;
+      this.track.innerHTML = one.repeat(copies);
+      this.track.querySelectorAll('figure').forEach((f, k) => {
+        f.tabIndex = (this.offset === 0 && k < now.length) ? 0 : -1;   // only the first set on page 4 is tabbable
+        if (k >= now.length) f.setAttribute('aria-hidden', 'true');
+      });
+    }
+
+    // page 4 shows the strip from x = 0, page 5 from x = 850, so it reads as one strip over the spine
+    place(p) { this.track.style.transform = 'translateX(' + (-((p + this.offset) % setW)) + 'px)'; }
+  }
+
+  /* ---------- 4. <zine-count> ---------- */
+  class ZineCount extends HTMLElement {
+    connectedCallback() {
+      if (this._ready) return;
+      this._ready = true;
+      const root = this.attachShadow({ mode: 'open' });
+      const out = document.createElement('span');
+      root.append(out);
+      this.render = () => { const n = list.length; out.textContent = n + (n === 1 ? ' zine' : ' zines'); };
+      listeners.add(this.render);
+      this.render();
+    }
+    disconnectedCallback() { listeners.delete(this.render); }
+  }
+
+  /* ---------- 5. viewer ---------- */
+  let viewer = null, vi = 0;
+  function buildViewer() {
+    viewer = document.createElement('dialog');
+    viewer.className = 'zine-viewer';
+    viewer.innerHTML =
+      '<figure><a class="zv-pic"><img alt=""><div class="zv-ph"></div></a><figcaption><b></b><span></span></figcaption></figure>' +
+      '<div class="zv-nav"><button type="button" data-d="-1">Previous</button>' +
+      '<span class="zv-n"></span>' +
+      '<button type="button" data-d="1">Next</button>' +
+      '<a class="zv-open">Open zine</a>' +
+      '<button type="button" class="zv-close">Close</button></div>';
+    document.body.append(viewer);
+    viewer.addEventListener('click', e => {
+      const b = e.target.closest('button');
+      if (b && b.dataset.d) show(vi + +b.dataset.d);
+      else if (b && b.classList.contains('zv-close')) viewer.close();
+      else if (e.target.closest('a[href^="#"]')) viewer.close();   // a page in this book: close, then the book turns there
+      else if (e.target === viewer) viewer.close();      // click the dark area
+    });
+    // keep the book from turning while the viewer is open
+    viewer.addEventListener('keydown', e => {
+      if (e.key === 'ArrowRight') { e.preventDefault(); show(vi + 1); }
+      else if (e.key === 'ArrowLeft') { e.preventDefault(); show(vi - 1); }
+      if (e.key !== 'Escape' && e.key !== 'Tab') e.stopPropagation();
+    });
+    viewer.addEventListener('close', () => { document.documentElement.style.overflow = ''; });
+  }
+  function show(i) {
+    if (!list.length) return;
+    vi = (i + list.length) % list.length;
+    const z = list[vi];
+    const img = viewer.querySelector('img'), ph = viewer.querySelector('.zv-ph');
+    img.hidden = !z.src; ph.hidden = !!z.src;
+    if (z.src) { img.src = z.src; img.alt = z.title || ''; } else ph.textContent = z.title || 'Zine';
+    viewer.querySelector('figcaption b').textContent = z.title || 'Untitled';
+    viewer.querySelector('figcaption span').textContent = z.by || '';
+    viewer.querySelector('.zv-n').textContent = (vi + 1) + ' / ' + list.length;
+    // link to this person's zine page (photo and button both go there)
+    const link = z.link || '';
+    const outside = /^https?:/.test(link);   // other people's sites open in a new tab
+    viewer.querySelectorAll('.zv-pic, .zv-open').forEach(a => {
+      if (link) { a.href = link; } else a.removeAttribute('href');
+      if (outside) { a.target = '_blank'; a.rel = 'noopener'; } else { a.removeAttribute('target'); a.removeAttribute('rel'); }
+    });
+    viewer.querySelector('.zv-open').hidden = !link;
+  }
+  function openViewer(i) {
+    if (!viewer) buildViewer();
+    show(i);
+    document.documentElement.style.overflow = 'hidden';   // stop the book from turning underneath
+    viewer.showModal();
+  }
+
+  /* ---------- helpers ---------- */
+  // width of a photo when it is IMG_H tall (falls back to a zine-page shape if it fails to load)
+  const widthCache = new Map();
+  function photoWidth(src, fallback) {
+    if (widthCache.has(src)) return widthCache.get(src);
+    const p = new Promise(res => {
+      const im = new Image();
+      im.onload = () => res(Math.round(IMG_H * im.naturalWidth / im.naturalHeight) || fallback);
+      im.onerror = () => res(fallback);
+      im.src = src;
+    });
+    widthCache.set(src, p);
+    return p;
+  }
+  function esc(s) { return String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c])); }
+
+  customElements.define('zine-band', ZineBand);
+  customElements.define('zine-count', ZineCount);
+  readTitles();
+})();
+</script>
+</body>
+</html>
