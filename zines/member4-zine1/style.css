@@ -1,0 +1,126 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: #F5F2EC;
+  color: #191919;
+  font-family: Arial, sans-serif;
+  overflow: hidden;
+  position: relative;
+}
+
+.season {
+  position: absolute;
+  top: 35px;
+  left: 5%;
+  font-size: 11px;
+  letter-spacing: 3px;
+  color: #F13B27;
+}
+
+.thank-you {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 8%;
+  position: relative;
+  z-index: 2;
+}
+
+.eyebrow {
+  font-size: 12px;
+  letter-spacing: 4px;
+  color: #F13B27;
+  margin-bottom: 25px;
+}
+
+h1 {
+  font-family: Georgia, serif;
+  font-size: clamp(90px, 16vw, 190px);
+  font-weight: normal;
+  line-height: .78;
+  letter-spacing: -8px;
+  margin: 0;
+}
+
+h1 span {
+  color: #F13B27;
+}
+
+.message {
+  max-width: 430px;
+  font-size: 17px;
+  line-height: 1.7;
+  color: #55514C;
+  margin-top: 40px;
+}
+
+.closing {
+  position: absolute;
+  bottom: 45px;
+  left: 8%;
+  right: 8%;
+  border-top: 1px solid #D9D5CC;
+  padding-top: 16px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: #F13B27;
+}
+
+.leaf-container {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.leaf {
+  position: absolute;
+  top: -50px;
+  animation: fall linear forwards;
+  opacity: 0;
+  pointer-events: none;
+}
+
+@keyframes fall {
+  0% {
+    transform: translate(0, -50px) rotate(0deg);
+    opacity: 0;
+  }
+
+  10% {
+    opacity: .9;
+  }
+
+  50% {
+    transform: translate(60px, 50vh) rotate(180deg);
+  }
+
+  100% {
+    transform: translate(-40px, 110vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+@media (max-width: 600px) {
+  h1 {
+    font-size: 100px;
+    letter-spacing: -5px;
+  }
+
+  .message {
+    font-size: 14px;
+  }
+
+  .closing {
+    font-size: 8px;
+    gap: 15px;
+  }
+}
