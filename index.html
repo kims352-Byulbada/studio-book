@@ -21,18 +21,23 @@
     editButton: true  // show the Edit button (set to false when the site is finished; E still works)
   };
 
-  /* The zines, in order. Each one is a folder in zines/ with two files:
+  /* The zines, in order. Everyone makes two zines, so each person has two folders (member1-zine1, member1-zine2 …).
+     Each folder has two files:
        index.html  the zine itself (its <title> and <meta name="author"> become the caption)
        thumb.jpg   a wide 2:1 picture, used on the moving strip and on the zine's own spread in the book
      The title/by here are only shown until the zine's own page is read (or when you open the site from your computer).
      See HOW-TO-ADD-YOUR-ZINE.md. */
   window.ZINE_SLOTS = [
-    { slot: "spotify",     title: "Fall Wrapped",      by: "Andrew Kim" },
-    { slot: "tim-hortons", title: "First Frost",       by: "Andrew Kim" },
-    { slot: "member1",     title: "Zine coming soon",  by: "Member 1" },
-    { slot: "member2",     title: "Zine coming soon",  by: "Member 2" },
-    { slot: "member3",     title: "Zine coming soon",  by: "Member 3" },
-    { slot: "member4",     title: "Zine coming soon",  by: "Member 4" }
+    { slot: "spotify",         title: "Fall Wrapped",          by: "Andrew Kim" },
+    { slot: "tim-hortons",     title: "First Frost",           by: "Andrew Kim" },
+    { slot: "member1-zine1",   title: "Zine 1 coming soon",    by: "Member 1" },
+    { slot: "member1-zine2",   title: "Zine 2 coming soon",    by: "Member 1" },
+    { slot: "member2-zine1",   title: "Zine 1 coming soon",    by: "Member 2" },
+    { slot: "member2-zine2",   title: "Zine 2 coming soon",    by: "Member 2" },
+    { slot: "member3-zine1",   title: "Zine 1 coming soon",    by: "Member 3" },
+    { slot: "member3-zine2",   title: "Zine 2 coming soon",    by: "Member 3" },
+    { slot: "member4-zine1",   title: "Zine 1 coming soon",    by: "Member 4" },
+    { slot: "member4-zine2",   title: "Zine 2 coming soon",    by: "Member 4" }
   ];
 
 </script>
@@ -183,44 +188,84 @@
       <a class="zine-open" href="zines/tim-hortons/index.html">Open zine</a>
     </article>
 
-    <!-- zine: member1 -->
-    <article class="page zine-l" data-zine="member1">
-      <img class="zine-img" src="zines/member1/thumb.jpg" alt="">
-      <p class="zine-cap"><b class="zt">Zine coming soon</b><span class="zb">Member 1</span></p>
+    <!-- zine: member1-zine1 -->
+    <article class="page zine-l" data-zine="member1-zine1">
+      <img class="zine-img" src="zines/member1-zine1/thumb.jpg" alt="">
+      <p class="zine-cap"><b class="zt">Zine 1 coming soon</b><span class="zb">Member 1</span></p>
     </article>
-    <article class="page zine-r" data-zine="member1">
-      <img class="zine-img" src="zines/member1/thumb.jpg" alt="">
-      <a class="zine-open" href="zines/member1/index.html">Open zine</a>
-    </article>
-
-    <!-- zine: member2 -->
-    <article class="page zine-l" data-zine="member2">
-      <img class="zine-img" src="zines/member2/thumb.jpg" alt="">
-      <p class="zine-cap"><b class="zt">Zine coming soon</b><span class="zb">Member 2</span></p>
-    </article>
-    <article class="page zine-r" data-zine="member2">
-      <img class="zine-img" src="zines/member2/thumb.jpg" alt="">
-      <a class="zine-open" href="zines/member2/index.html">Open zine</a>
+    <article class="page zine-r" data-zine="member1-zine1">
+      <img class="zine-img" src="zines/member1-zine1/thumb.jpg" alt="">
+      <a class="zine-open" href="zines/member1-zine1/index.html">Open zine</a>
     </article>
 
-    <!-- zine: member3 -->
-    <article class="page zine-l" data-zine="member3">
-      <img class="zine-img" src="zines/member3/thumb.jpg" alt="">
-      <p class="zine-cap"><b class="zt">Zine coming soon</b><span class="zb">Member 3</span></p>
+    <!-- zine: member1-zine2 -->
+    <article class="page zine-l" data-zine="member1-zine2">
+      <img class="zine-img" src="zines/member1-zine2/thumb.jpg" alt="">
+      <p class="zine-cap"><b class="zt">Zine 2 coming soon</b><span class="zb">Member 1</span></p>
     </article>
-    <article class="page zine-r" data-zine="member3">
-      <img class="zine-img" src="zines/member3/thumb.jpg" alt="">
-      <a class="zine-open" href="zines/member3/index.html">Open zine</a>
+    <article class="page zine-r" data-zine="member1-zine2">
+      <img class="zine-img" src="zines/member1-zine2/thumb.jpg" alt="">
+      <a class="zine-open" href="zines/member1-zine2/index.html">Open zine</a>
     </article>
 
-    <!-- zine: member4 -->
-    <article class="page zine-l" data-zine="member4">
-      <img class="zine-img" src="zines/member4/thumb.jpg" alt="">
-      <p class="zine-cap"><b class="zt">Zine coming soon</b><span class="zb">Member 4</span></p>
+    <!-- zine: member2-zine1 -->
+    <article class="page zine-l" data-zine="member2-zine1">
+      <img class="zine-img" src="zines/member2-zine1/thumb.jpg" alt="">
+      <p class="zine-cap"><b class="zt">Zine 1 coming soon</b><span class="zb">Member 2</span></p>
     </article>
-    <article class="page zine-r" data-zine="member4">
-      <img class="zine-img" src="zines/member4/thumb.jpg" alt="">
-      <a class="zine-open" href="zines/member4/index.html">Open zine</a>
+    <article class="page zine-r" data-zine="member2-zine1">
+      <img class="zine-img" src="zines/member2-zine1/thumb.jpg" alt="">
+      <a class="zine-open" href="zines/member2-zine1/index.html">Open zine</a>
+    </article>
+
+    <!-- zine: member2-zine2 -->
+    <article class="page zine-l" data-zine="member2-zine2">
+      <img class="zine-img" src="zines/member2-zine2/thumb.jpg" alt="">
+      <p class="zine-cap"><b class="zt">Zine 2 coming soon</b><span class="zb">Member 2</span></p>
+    </article>
+    <article class="page zine-r" data-zine="member2-zine2">
+      <img class="zine-img" src="zines/member2-zine2/thumb.jpg" alt="">
+      <a class="zine-open" href="zines/member2-zine2/index.html">Open zine</a>
+    </article>
+
+    <!-- zine: member3-zine1 -->
+    <article class="page zine-l" data-zine="member3-zine1">
+      <img class="zine-img" src="zines/member3-zine1/thumb.jpg" alt="">
+      <p class="zine-cap"><b class="zt">Zine 1 coming soon</b><span class="zb">Member 3</span></p>
+    </article>
+    <article class="page zine-r" data-zine="member3-zine1">
+      <img class="zine-img" src="zines/member3-zine1/thumb.jpg" alt="">
+      <a class="zine-open" href="zines/member3-zine1/index.html">Open zine</a>
+    </article>
+
+    <!-- zine: member3-zine2 -->
+    <article class="page zine-l" data-zine="member3-zine2">
+      <img class="zine-img" src="zines/member3-zine2/thumb.jpg" alt="">
+      <p class="zine-cap"><b class="zt">Zine 2 coming soon</b><span class="zb">Member 3</span></p>
+    </article>
+    <article class="page zine-r" data-zine="member3-zine2">
+      <img class="zine-img" src="zines/member3-zine2/thumb.jpg" alt="">
+      <a class="zine-open" href="zines/member3-zine2/index.html">Open zine</a>
+    </article>
+
+    <!-- zine: member4-zine1 -->
+    <article class="page zine-l" data-zine="member4-zine1">
+      <img class="zine-img" src="zines/member4-zine1/thumb.jpg" alt="">
+      <p class="zine-cap"><b class="zt">Zine 1 coming soon</b><span class="zb">Member 4</span></p>
+    </article>
+    <article class="page zine-r" data-zine="member4-zine1">
+      <img class="zine-img" src="zines/member4-zine1/thumb.jpg" alt="">
+      <a class="zine-open" href="zines/member4-zine1/index.html">Open zine</a>
+    </article>
+
+    <!-- zine: member4-zine2 -->
+    <article class="page zine-l" data-zine="member4-zine2">
+      <img class="zine-img" src="zines/member4-zine2/thumb.jpg" alt="">
+      <p class="zine-cap"><b class="zt">Zine 2 coming soon</b><span class="zb">Member 4</span></p>
+    </article>
+    <article class="page zine-r" data-zine="member4-zine2">
+      <img class="zine-img" src="zines/member4-zine2/thumb.jpg" alt="">
+      <a class="zine-open" href="zines/member4-zine2/index.html">Open zine</a>
     </article>
   </section>
 
