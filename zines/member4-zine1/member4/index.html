@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>EYECANDY — The Merch Edit</title>
+<meta name="author" content="Ahanaa Sarda">
+
+<style>
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #191919;
+  font-family: Arial, sans-serif;
+  color: #171717;
+}
+
+.bar {
+  display: flex;
+  justify-content: space-between;
+  padding: 16px 3%;
+  color: #eee8dc;
+  font-size: 13px;
+  letter-spacing: 1px;
+}
+
+.bar a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* FIRST SPREAD */
+
+.spread {
+  width: min(100%, 1400px);
+  aspect-ratio: 2 / 1;
+  margin: 30px auto;
+  background: #f4eee3;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  overflow: hidden;
+}
+
+.left {
+  padding: 6%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-right: 1px solid #171717;
+  position: relative;
+}
+
+.logo {
+  font-family: Georgia, serif;
+  font-size: clamp(38px, 6.5vw, 92px);
+  font-weight: bold;
+  color: #ed171c;
+  letter-spacing: -5px;
+  line-height: .9;
+}
+
+.subtitle {
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-top: 12px;
+}
+
+.intro {
+  margin-top: 35px;
+}
+
+.section-label {
+  color: #ed171c;
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
+h1 {
+  font-family: Georgia, serif;
+  font-size: clamp(38px, 5vw, 70px);
+  line-height: .94;
+  margin: 20px 0;
+  font-weight: normal;
+  letter-spacing: -2px;
+}
+
+.description {
+  font-size: clamp(11px, 1.1vw, 15px);
+  line-height: 1.7;
+  max-width: 370px;
+}
+
+.left-bottom {
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid #171717;
+  padding-top: 14px;
+  font-size: 10px;
+  letter-spacing: 2px;
+}
+
+/* RIGHT SIDE */
+
+.right {
+  padding: 5%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.right-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.right-heading span:last-child {
+  color: #ed171c;
+}
+
+.feature {
+  background: #ed171c;
+  color: white;
+  min-height: 190px;
+  padding: 22px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.feature small {
+  font-size: 10px;
+  letter-spacing: 2px;
+}
+
+.feature h2 {
+  font-family: Georgia, serif;
+  font-size: clamp(30px, 3.5vw, 48px);
+  font-weight: normal;
+  line-height: .95;
+  margin: 18px 0 0;
+}
+
+.eye {
+  width: 100px;
+  height: 55px;
+  border: 2px solid white;
+  border-radius: 80% 0;
+  transform: rotate(45deg);
+  margin-right: 20px;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.eye:after {
+  content: "";
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  background: white;
+  border-radius: 50%;
+  top: 15px;
+  left: 38px;
+}
+
+.products {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.product {
+  background: #171717;
+  color: white;
+  min-height: 145px;
+  padding: 13px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.product:nth-child(2) {
+  background: #e7ddce;
+  color: #171717;
+}
+
+.product:nth-child(3) {
+  background: #171717;
+}
+
+.product span {
+  font-size: 9px;
+  letter-spacing: 1.5px;
+}
+
+.product strong {
+  font-family: Georgia, serif;
+  font-size: clamp(17px, 2vw, 26px);
+  font-weight: normal;
+  line-height: 1;
+}
+
+.right-bottom {
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid #171717;
+  padding-top: 14px;
+  margin-top: 15px;
+  font-size: 10px;
+  letter-spacing: 2px;
+}
+
+/* SECOND SPREAD */
+
+.merch-spread {
+  width: min(100%, 1400px);
+  aspect-ratio: 2 / 1;
+  margin: 30px auto;
+  background: #f4eee3;
+  position: relative;
+  overflow: hidden;
+}
+
+.merch-spread img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.merch-label {
+  position: absolute;
+  left: 3%;
+  bottom: 3%;
+  background: #f4eee3;
+  padding: 15px 22px;
+  max-width: 340px;
+}
+
+.merch-label span {
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: #ed171c;
+}
+
+.merch-label h2 {
+  font-family: Georgia, serif;
+  font-weight: normal;
+  font-size: clamp(22px, 3vw, 38px);
+  margin: 8px 0;
+}
+
+.merch-label p {
+  font-size: 12px;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* MOBILE */
+
+@media (max-width: 650px) {
+  .spread {
+    aspect-ratio: auto;
+    grid-template-columns: 1fr;
+  }
+
+  .left {
+    min-height: 470px;
+    border-right: none;
+    border-bottom: 1px solid #171717;
+  }
+
+  .right {
+    min-height: 470px;
+  }
+
+  .products {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .feature {
+    min-height: 170px;
+  }
+
+  .merch-spread {
+    aspect-ratio: auto;
+  }
+
+  .merch-spread img {
+    height: auto;
+    aspect-ratio: 1 / 1;
+  }
+}
+
+</style>
+</head>
+
+<body>
+
+<nav class="bar">
+  <a href="../../index.html#zines">← Back to the book</a>
+  <span>EYECANDY / STUDIO MERCH 2026</span>
+</nav>
+
+<!-- SPREAD 01: COVER -->
+
+<main class="spread">
+
+  <section class="left">
+
+    <div>
+      <div class="logo">EYECANDY.</div>
+      <div class="subtitle">A Visual Design Studio</div>
+    </div>
+
+    <div class="intro">
+      <div class="section-label">A New Collection / 2026</div>
+
+      <h1>DESIGN YOU<br>CAN TAKE<br>WITH YOU.</h1>
+
+      <p class="description">
+        More than a logo. A visual identity you can wear,
+        hold, collect and take with you.
+        Introducing the EYECANDY merchandise collection.
+      </p>
+    </div>
+
+    <div class="left-bottom">
+      <span>ISSUE NO. 01</span>
+      <span>NEW YORK / 2026</span>
+    </div>
+
+  </section>
+
+  <section class="right">
+
+    <div>
+      <div class="right-heading">
+        <span>Inside the collection</span>
+        <span>04 Categories</span>
+      </div>
+
+      <div class="feature">
+        <div>
+          <small>01 / THE EVERYDAY EDIT</small>
+          <h2>Paper<br>Things.</h2>
+        </div>
+
+        <div class="eye"></div>
+      </div>
+
+      <div class="products">
+
+        <div class="product">
+          <span>02 / APPAREL</span>
+          <strong>Wear<br>It.</strong>
+        </div>
+
+        <div class="product">
+          <span>03 / STICKERS</span>
+          <strong>Stick<br>Around.</strong>
+        </div>
+
+        <div class="product">
+          <span>04 / OBJECTS</span>
+          <strong>Little<br>Things.</strong>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="right-bottom">
+      <span>DESIGNED FOR THE EVERYDAY</span>
+      <span>01 — 02</span>
+    </div>
+
+  </section>
+
+</main>
+
+<!-- SPREAD 02: MERCHANDISE COLLECTION -->
+
+<section class="merch-spread">
+
+  <img src="stationery.jpg"
+       alt="EYECANDY merchandise collection including packaging, stationery and accessories">
+
+  <div class="merch-label">
+    <span>02 — THE COLLECTION</span>
+    <h2>Objects of EYECANDY.</h2>
+    <p>
+      A visual identity transformed into
+      everyday objects, made to wear,
+      share and collect.
+    </p>
+  </div>
+
+</section>
+
+</body>
+</html>
