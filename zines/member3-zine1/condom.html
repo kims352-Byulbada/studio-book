@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Trojan: Fall Edition</title>
+<meta name="author" content="Nanda">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#f6efe3; --ink:#311c11; --ember:#d9480f; --maple:#e8a33d; --plum:#5b2a4a; --moss:#5f6b3a;
+    --font:"Schibsted Grotesk", system-ui, -apple-system, sans-serif;
+  }
+  *,*::before,*::after{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--cream);color:var(--ink);font-family:var(--font);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  a{color:inherit}
+  :focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+
+  /* falling leaves */
+  #leaves{position:fixed;inset:0;pointer-events:none;z-index:1;overflow:hidden}
+  .leaf{position:absolute;top:-8vh;width:var(--s);height:var(--s);background:var(--c);
+    border-radius:0 100% 0 100%;opacity:.8;animation:fall var(--d) linear var(--delay) infinite}
+  @keyframes fall{
+    0%{transform:translate3d(0,0,0) rotate(0)}
+    50%{transform:translate3d(var(--x),55vh,0) rotate(200deg)}
+    100%{transform:translate3d(calc(var(--x) * -.6),112vh,0) rotate(420deg)}
+  }
+  @media (prefers-reduced-motion:reduce){.leaf{animation:none;top:calc(var(--y) * 1%)}}
+
+  header,main,footer{position:relative;z-index:2}
+  .nav{display:flex;justify-content:space-between;align-items:center;padding:22px clamp(20px,4vw,56px)}
+  .logo{font-weight:800;font-size:22px;letter-spacing:-.03em;text-decoration:none}
+  .nav ul{display:flex;gap:clamp(14px,2.5vw,34px);margin:0;padding:0;list-style:none;font-size:15px}
+  .nav ul a{text-decoration:none;opacity:.7}
+  .nav ul a:hover{opacity:1}
+  @media (max-width:560px){.nav ul li:nth-child(n+3){display:none}}
+
+  /* hero */
+  .hero{padding:clamp(24px,6vw,72px) clamp(20px,4vw,56px) 40px;display:grid;grid-template-columns:1.2fr .8fr;gap:32px;align-items:center}
+  .tag{display:inline-block;font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;border:1.5px solid var(--ink);border-radius:999px;padding:6px 14px}
+  h1{margin:22px 0 18px;font-size:clamp(56px,11vw,150px);font-weight:800;line-height:.88;letter-spacing:-.05em}
+  h1 em{font-style:normal;color:var(--ember)}
+  .lede{max-width:34ch;font-size:clamp(18px,2vw,22px);line-height:1.4;margin:0 0 28px}
+  .btn{display:inline-block;background:var(--ink);color:var(--cream);text-decoration:none;font-weight:600;padding:14px 28px;border-radius:999px;transition:background .2s}
+  .btn:hover{background:var(--ember)}
+  .btn.ghost{background:none;color:var(--ink);border:1.5px solid var(--ink);margin-left:8px}
+  .btn.ghost:hover{background:var(--ink);color:var(--cream)}
+  @media (max-width:820px){.hero{grid-template-columns:1fr}}
+
+  /* packets: foil, crimped edges, embossed ring */
+  .packet{position:absolute;width:clamp(150px,22vw,250px);aspect-ratio:1;border-radius:6px;color:#fff;
+    background:linear-gradient(135deg,rgba(255,255,255,.4),rgba(255,255,255,0) 35%,rgba(0,0,0,.18) 100%),var(--c);
+    box-shadow:0 18px 40px rgba(42,26,18,.25),inset 0 0 0 1px rgba(255,255,255,.25);transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+  .packet::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+    background:
+      repeating-linear-gradient(0deg,rgba(0,0,0,.2) 0 1.5px,rgba(255,255,255,.18) 1.5px 3px) left/14px 100% no-repeat,
+      repeating-linear-gradient(0deg,rgba(0,0,0,.2) 0 1.5px,rgba(255,255,255,.18) 1.5px 3px) right/14px 100% no-repeat,
+      repeating-linear-gradient(90deg,rgba(0,0,0,.2) 0 1.5px,rgba(255,255,255,.18) 1.5px 3px) top/100% 14px no-repeat,
+      repeating-linear-gradient(90deg,rgba(0,0,0,.2) 0 1.5px,rgba(255,255,255,.18) 1.5px 3px) bottom/100% 14px no-repeat}
+  .packet::after{content:"";position:absolute;left:50%;top:44%;width:52%;aspect-ratio:1;border-radius:50%;transform:translate(-50%,-50%);
+    background:
+      radial-gradient(circle,transparent 52%,rgba(0,0,0,.22) 54%,rgba(255,255,255,.4) 58%,rgba(255,255,255,.1) 72%,transparent 74%),
+      radial-gradient(circle at 32% 28%,rgba(255,255,255,.3),transparent 50%)}
+  .packet span{position:absolute;left:24px;right:24px;bottom:24px;z-index:1;font-weight:800;font-size:clamp(15px,2vw,22px);letter-spacing:-.02em}
+  .packet small{display:block;font-weight:500;font-size:.62em;opacity:.85;letter-spacing:0}
+  .packet:nth-child(1){--c:var(--ember);left:2%;top:6%;transform:translate(var(--dx,0px),var(--dy,0px)) rotate(-12deg)}
+  .packet:nth-child(2){--c:var(--maple);left:32%;top:30%;transform:translate(var(--dx,0px),var(--dy,0px)) rotate(7deg);z-index:2;color:var(--ink)}
+  .packet:nth-child(3){--c:var(--plum);left:8%;top:52%;transform:translate(var(--dx,0px),var(--dy,0px)) rotate(-4deg)}
+  .stack:hover .packet:nth-child(1){transform:translate(var(--dx,0px),calc(var(--dy,0px) - 8px)) rotate(-18deg)}
+  .stack:hover .packet:nth-child(2){transform:translate(var(--dx,0px),calc(var(--dy,0px) - 8px)) rotate(12deg)}
+  .stack:hover .packet:nth-child(3){transform:translate(var(--dx,0px),calc(var(--dy,0px) - 8px)) rotate(-9deg)}
+
+  /* hero packets: draggable links */
+  a.packet{display:block;text-decoration:none;cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none}
+  a.packet.dragging{cursor:grabbing;transition:none;z-index:10}
+  a.packet:focus-visible{outline:3px solid var(--ink);outline-offset:4px}
+
+  /* condom out of the wrapper */
+  .cd{position:absolute;right:22px;top:18px;height:210px;width:auto;color:rgba(255,255,255,.6)}
+  .card{position:relative}
+  .card.light .cd{color:rgba(42,26,18,.4)}
+
+  /* limited edition: turkey */
+  .limited{background:var(--ink);color:var(--cream);border-radius:28px;margin:0 clamp(20px,4vw,56px);
+    display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
+  .limited .stage{position:relative;display:flex;justify-content:center;align-items:center;gap:28px;min-height:360px}
+  .packet.turkey{position:relative;--c:#8a4b21;width:clamp(210px,28vw,320px);transform:rotate(-5deg)}
+  .packet.turkey::after{display:none}
+  .packet.turkey .tk{position:absolute;left:50%;top:42%;width:62%;transform:translate(-50%,-50%)}
+  .packet.turkey span{font-size:clamp(12px,1.5vw,16px);line-height:1.2}
+  .badge{position:absolute;right:-14px;top:-14px;z-index:3;background:var(--maple);color:var(--ink);font-weight:800;font-size:13px;
+    letter-spacing:.08em;text-transform:uppercase;padding:9px 14px;border-radius:999px;transform:rotate(8deg);box-shadow:0 6px 16px rgba(0,0,0,.3)}
+  .cd.solo{position:static;height:min(300px,40vw);color:#c98a4a}
+  .limited .tag{border-color:var(--cream)}
+  .limited h2{color:var(--maple)}
+  .limited .quip{font-size:clamp(22px,3vw,34px);font-weight:800;letter-spacing:-.03em;line-height:1.1;margin:0 0 20px}
+  .limited .sub{margin-bottom:24px}
+  .limited .btn{background:var(--maple);color:var(--ink)}
+  .limited .btn:hover{background:var(--cream)}
+  @media (max-width:820px){.limited{grid-template-columns:1fr}}
+
+  /* marquee */
+  .marquee{overflow:hidden;background:var(--ink);color:var(--cream);padding:14px 0;margin:30px 0;white-space:nowrap}
+  .marquee div{display:inline-block;animation:slide 28s linear infinite;font-size:20px;font-weight:600}
+  .marquee span{margin:0 22px}
+  @keyframes slide{to{transform:translateX(-50%)}}
+  @media (prefers-reduced-motion:reduce){.marquee div{animation:none}}
+
+  section{padding:clamp(40px,7vw,90px) clamp(20px,4vw,56px)}
+  h2{margin:0 0 12px;font-size:clamp(36px,6vw,76px);font-weight:800;letter-spacing:-.04em;line-height:.95}
+  .sub{max-width:46ch;font-size:19px;line-height:1.45;margin:0 0 40px}
+
+  /* shades */
+  .shades{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px}
+  .card{border-radius:22px;padding:28px;min-height:280px;display:flex;flex-direction:column;justify-content:space-between;background:var(--c);color:#fff}
+  .card.light{color:var(--ink)}
+  .card h3{margin:0;font-size:44px;font-weight:800;letter-spacing:-.04em}
+  .card p{margin:8px 0 0;font-size:16px;line-height:1.4;max-width:28ch}
+  .card .note{font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;opacity:.85}
+
+  /* features */
+  .feat{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:28px}
+  .feat div{border-top:2px solid var(--ink);padding-top:16px}
+  .feat b{display:block;font-size:24px;letter-spacing:-.02em;margin-bottom:8px}
+  .feat p{margin:0;font-size:16px;line-height:1.45}
+
+  .cta{background:var(--ember);color:#fff;text-align:center;border-radius:28px;margin:0 clamp(20px,4vw,56px)}
+  .cta h2{font-size:clamp(40px,8vw,110px)}
+  .cta .btn{background:var(--cream);color:var(--ink)}
+  .cta .btn:hover{background:var(--ink);color:var(--cream)}
+
+  footer{padding:40px clamp(20px,4vw,56px) 60px;font-size:14px;line-height:1.5;display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;opacity:.8}
+  footer p{margin:0;max-width:60ch}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="condom" viewBox="0 0 60 190">
+      <path d="M30 6C33 6 35 9 35 13C35 16 33 18 32 20C40 24 44 34 44 50L44 168L16 168L16 50C16 34 20 24 28 20C27 18 25 16 25 13C25 9 27 6 30 6Z" fill="currentColor"/>
+      <rect x="12" y="164" width="36" height="16" rx="8" fill="currentColor"/>
+      <rect x="12" y="164" width="36" height="16" rx="8" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="1.5"/>
+      <path d="M23 42L23 158" stroke="#fff" stroke-opacity=".5" stroke-width="4" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="turkey" viewBox="0 0 200 200">
+      <g transform="rotate(-70 100 118)"><ellipse cx="100" cy="68" rx="15" ry="46" fill="#d9480f"/></g>
+      <g transform="rotate(-35 100 118)"><ellipse cx="100" cy="68" rx="15" ry="46" fill="#e8a33d"/></g>
+      <g transform="rotate(35 100 118)"><ellipse cx="100" cy="68" rx="15" ry="46" fill="#5b2a4a"/></g>
+      <g transform="rotate(70 100 118)"><ellipse cx="100" cy="68" rx="15" ry="46" fill="#5f6b3a"/></g>
+      <ellipse cx="100" cy="68" rx="15" ry="46" fill="#b5651d"/>
+      <ellipse cx="100" cy="132" rx="38" ry="40" fill="#6b3a17"/>
+      <ellipse cx="100" cy="140" rx="24" ry="26" fill="#8a4b21"/>
+      <circle cx="100" cy="92" r="17" fill="#6b3a17"/>
+      <path d="M100 98L112 104L100 108Z" fill="#e8a33d"/>
+      <ellipse cx="104" cy="112" rx="5" ry="9" fill="#c0291a"/>
+      <circle cx="94" cy="88" r="3.5" fill="#fff"/><circle cx="94" cy="88" r="1.6" fill="#111"/>
+      <path d="M88 170L88 186M112 170L112 186" stroke="#e8a33d" stroke-width="5" stroke-linecap="round"/>
+    </symbol>
+  </defs>
+</svg>
+
+<div id="leaves" aria-hidden="true"></div>
+
+<header class="nav">
+  <a class="logo" href="#">Trojan prototype</a>
+  <nav aria-label="Sections">
+    <ul>
+      <li><a href="#shades">Shades</a></li>
+      <li><a href="#why">Why fall</a></li>
+      <li><a href="#limited">Limited</a></li>
+      <li><a href="#drop">The drop</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main>
+  <div class="hero">
+    <div>
+      <span class="tag">Fall Edition · Prototype</span>
+      <h1>Fall in.<br><em>Stay covered.</em></h1>
+      <p class="lede">Condoms for the cozy season. Three shades, one wrapper that opens like a leaf, and protection that is easy to talk about.</p>
+      <a class="btn" href="#shades">Meet the shades</a><a class="btn ghost" href="#why">Why fall?</a>
+    </div>
+    <div class="stack" aria-label="Three Rustle packets in ember, maple and plum">
+      <a class="packet" href="#shades" draggable="false" title="Drag me around, or click to see the shades" aria-label="Ember shade: see the shades"><span>Ember<small>Fall Edition</small></span></a>
+      <a class="packet" href="#shades" draggable="false" title="Drag me around, or click to see the shades" aria-label="Maple shade: see the shades"><span>Maple<small>Fall Edition</small></span></a>
+      <a class="packet" href="#shades" draggable="false" title="Drag me around, or click to see the shades" aria-label="Plum shade: see the shades"><span>Plum<small>Fall Edition</small></span></a>
+    </div>
+  </div>
+
+  <div class="marquee" aria-hidden="true">
+    <div>
+      <span>Fall in</span>✦<span>Stay covered</span>✦<span>Sweater weather</span>✦<span>Cuffing season, protected</span>✦
+      <span>Fall in</span>✦<span>Stay covered</span>✦<span>Sweater weather</span>✦<span>Cuffing season, protected</span>✦
+    </div>
+  </div>
+
+  <section id="shades">
+    <h2>Three shades.<br>One season.</h2>
+    <p class="sub">Each pack takes its colour, and its mood, from a different part of fall.</p>
+    <div class="shades">
+      <article class="card" style="--c:var(--ember)">
+        <svg class="cd" viewBox="0 0 60 190" aria-hidden="true"><use href="#condom"/></svg>
+        <span class="note">01 · October</span>
+        <div><h3>Ember</h3><p>Burnt orange. Bonfires, scarves, a good first date.</p></div>
+      </article>
+      <article class="card light" style="--c:var(--maple)">
+        <svg class="cd" viewBox="0 0 60 190" aria-hidden="true"><use href="#condom"/></svg>
+        <span class="note">02 · November</span>
+        <div><h3>Maple</h3><p>Warm amber. Late sunsets and a slow Sunday.</p></div>
+      </article>
+      <article class="card" style="--c:var(--plum)">
+        <svg class="cd" viewBox="0 0 60 190" aria-hidden="true"><use href="#condom"/></svg>
+        <span class="note">03 · December</span>
+        <div><h3>Plum</h3><p>Deep purple. The last cold night before winter.</p></div>
+      </article>
+    </div>
+  </section>
+
+  <section id="why">
+    <h2>Why a fall edition?</h2>
+    <p class="sub">The weather turns, the plans move indoors, and people pair up. A seasonal drop makes protection part of the mood instead of an afterthought.</p>
+    <div class="feat">
+      <div><b>Leaf-fold wrapper</b><p>The packet opens in two easy tears, shaped like a leaf and easy to find in the dark.</p></div>
+      <div><b>Season-matched colours</b><p>Three packs designed to sit on a nightstand, not hide at the bottom of a drawer.</p></div>
+      <div><b>Friendly voice</b><p>Short, warm copy on every pack. No shame, no awkwardness, just a nudge.</p></div>
+      <div><b>Limited run</b><p>A fall-only collection that returns with a new palette every year.</p></div>
+    </div>
+  </section>
+
+  <section id="limited" class="limited">
+    <div class="stage">
+      <div class="packet turkey">
+        <b class="badge">Limited edition</b>
+        <svg class="tk" viewBox="0 0 200 200" aria-hidden="true"><use href="#turkey"/></svg>
+        <span>Rustle · Turkey<small>I am not the only one getting stuffed this season!</small></span>
+      </div>
+      <svg class="cd solo" viewBox="0 0 60 190" aria-label="The turkey condom, unrolled"><use href="#condom"/><use href="#turkey" x="12" y="96" width="36" height="36"/></svg>
+    </div>
+    <div>
+      <span class="tag">Limited edition · Thanksgiving only</span>
+      <h2>The Turkey.</h2>
+      <p class="quip">&ldquo;I am not the only one getting stuffed this season!&rdquo;</p>
+      <p class="sub">One bird, one night, one very small run. Printed on the packet and on the condom itself, gone when the leftovers are.</p>
+      <a class="btn" href="#drop">Save me a bird</a>
+    </div>
+  </section>
+
+  <section id="drop" class="cta">
+    <h2>Get ready<br>for the drop.</h2>
+    <p class="sub" style="margin:0 auto 28px">Rustle is a design concept in development.</p>
+    <a class="btn" href="#">Join the list</a>
+  </section>
+</main>
+
+<footer>
+  <p>Rustle: Fall Edition is a student design prototype and is not a real product for sale. Real condoms should always be tested and approved by the relevant health authorities.</p>
+  <p>Autumn 2026 · Nanda · Communication design</p>
+</footer>
+
+<script>
+  // falling leaves
+  (function(){
+    var box = document.getElementById('leaves');
+    var colors = ['#d9480f','#e8a33d','#5b2a4a','#5f6b3a','#b5651d'];
+    for (var i = 0; i < 16; i++) {
+      var l = document.createElement('span');
+      l.className = 'leaf';
+      l.style.left = (Math.random() * 100) + '%';
+      l.style.setProperty('--s', (12 + Math.random() * 18).toFixed(0) + 'px');
+      l.style.setProperty('--c', colors[i % colors.length]);
+      l.style.setProperty('--x', ((Math.random() - .5) * 160).toFixed(0) + 'px');
+      l.style.setProperty('--d', (11 + Math.random() * 10).toFixed(1) + 's');
+      l.style.setProperty('--delay', (-Math.random() * 20).toFixed(1) + 's');
+      l.style.setProperty('--y', (Math.random() * 90).toFixed(0));
+      box.appendChild(l);
+    }
+  })();
+
+  // hero packets: drag them around the screen; a plain click goes to the shades
+  (function(){
+    var items = document.querySelectorAll('a.packet');
+    items.forEach(function(el){
+      var sx, sy, ox, oy, moved, id = null;
+      el.addEventListener('pointerdown', function(e){
+        if (e.button) return;
+        id = e.pointerId; moved = false;
+        sx = e.clientX; sy = e.clientY;
+        ox = parseFloat(el.style.getPropertyValue('--dx')) || 0;
+        oy = parseFloat(el.style.getPropertyValue('--dy')) || 0;
+        el.setPointerCapture(id);
+        el.classList.add('dragging');
+      });
+      el.addEventListener('pointermove', function(e){
+        if (id !== e.pointerId) return;
+        var dx = e.clientX - sx, dy = e.clientY - sy;
+        if (!moved && Math.hypot(dx, dy) < 6) return;
+        moved = true;
+        var nx = ox + dx, ny = oy + dy;
+        el.style.setProperty('--dx', nx + 'px');
+        el.style.setProperty('--dy', ny + 'px');
+        // keep it on screen
+        var r = el.getBoundingClientRect(), fx = 0, fy = 0;
+        if (r.left < 0) fx = -r.left; else if (r.right > innerWidth) fx = innerWidth - r.right;
+        if (r.top < 0) fy = -r.top; else if (r.bottom > innerHeight) fy = innerHeight - r.bottom;
+        if (fx || fy) {
+          el.style.setProperty('--dx', (nx + fx) + 'px');
+          el.style.setProperty('--dy', (ny + fy) + 'px');
+        }
+      });
+      function end(e){
+        if (id !== e.pointerId) return;
+        id = null;
+        el.classList.remove('dragging');
+      }
+      el.addEventListener('pointerup', end);
+      el.addEventListener('pointercancel', end);
+      // a drag should not count as a click
+      el.addEventListener('click', function(e){ if (moved) { e.preventDefault(); moved = false; } });
+      el.addEventListener('dragstart', function(e){ e.preventDefault(); });
+    });
+  })();
+</script>
+</body>
+</html>
