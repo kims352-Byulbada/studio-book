@@ -1,46 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Zine 1 coming soon</title>
-<meta name="author" content="Member 1">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
-<style>
-/* =====================================================================
-   PLACEHOLDER ZINE PAGE
-   Replace this whole file with your own zine (keep the name index.html).
-   Set <title> to your zine title and <meta name="author"> to your name: they become the caption.
-   Keep a "Back to the book" link pointing to ../../index.html#zines
-   so people can get back to the strip.
-   ===================================================================== */
-*{box-sizing:border-box}
-body{margin:0;min-height:100dvh;background:#f4f3ef;color:#1a1a1a;font-family:"Schibsted Grotesk",system-ui,sans-serif;display:flex;flex-direction:column}
-.bar{display:flex;justify-content:space-between;gap:16px;padding:16px clamp(16px,3vw,40px);font-size:15px}
-.bar a{color:#1a1a1a;text-decoration:none}
-.bar a:hover{text-decoration:underline}
-.bar span{color:#8b8b8b}
-:focus-visible{outline:2px solid #1a1a1a;outline-offset:3px}
-main{flex:1;display:grid;place-items:center;padding:24px clamp(16px,3vw,40px) 64px}
-.spread{width:min(100%,1100px);aspect-ratio:2/1;border:2px dashed #b9b8b2;display:grid;place-items:center;text-align:center;padding:24px}
-h1{margin:0 0 10px;font-size:clamp(28px,4vw,48px);font-weight:600;letter-spacing:-.02em}
-p{margin:0 auto;max-width:44ch;font-size:16px;line-height:1.5;color:#6b6b6b}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Autumn Receipt</title>
+  <meta name="author" content="Member 1">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <nav class="bar" aria-label="Zine">
-    <a href="../../index.html#zines">Back to the book</a>
-    <span>Member 1, zine 1</span>
+  <nav class="bar" aria-label="Zine navigation">
+    <a href="../../index.html#zines">← Back to the book</a>
+    <span>Autumn Receipt / Member 1</span>
   </nav>
+
   <main>
-    <div class="spread">
-      <div>
-        <h1>This zine is on its way.</h1>
-        <p>Replace this page and thumb.jpg in this folder with your own zine. The steps are in HOW-TO-ADD-YOUR-ZINE.md.</p>
-      </div>
+
+    <div class="scroll">
+      <section class="spread" aria-label="Autumn Receipt, pages 9 and 10">
+        <div class="frame">
+
+          <div class="left">
+            <header class="mast">
+              <span>COLLECTED / NOT BOUGHT</span>
+              <span>ISSUE 01 / FALL 2026</span>
+            </header>
+            <div class="hero">
+              <h1><span class="title-season">Autumn</span><span class="title-object">receipt<span class="title-period">.</span></span></h1>
+              <p class="sub">A RECORD OF<br>SMALL CHANGES.</p>
+            </div>
+            <div class="bottom">
+              <figure class="street-shot">
+                <img src="street.jpg" alt="A wet neighborhood street lined with autumn trees">
+                <figcaption><span>01 / THE LONG WAY HOME</span><span>+ 20 MIN</span></figcaption>
+              </figure>
+              <div class="field-notes">
+                <span class="note-label">FIELD NOTES / NOVEMBER</span>
+                <h2><span class="number">−02</span><span class="number-note">HOURS OF DAYLIGHT</span></h2>
+                <p><strong>Less light. More layers.</strong><br>A coffee stop. A longer walk. This is what a change of season looks like, item by item.</p>
+                <div class="edition">CORE I: INTERACTION, F26 · PROJECT 5.1</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="right">
+            <div class="contact-strip">
+              <figure><img src="coffee.jpg" alt="A hot coffee on books by a window"><figcaption>02 / SOMETHING WARM<br>+ 1 COFFEE</figcaption></figure>
+              <figure><img src="rain.jpg" alt="Rain droplets against a dark window"><figcaption>03 / STAYING IN<br>− 1 PLAN</figcaption></figure>
+              <p class="margin-note">KEEP<br><i>the change.</i></p>
+            </div>
+            <div class="rhead"><span>THE SEASONAL STORE / FALL 2026</span><p>Everything<br><em>adds up.</em></p></div>
+
+            <article class="receipt" aria-label="A fictional autumn receipt">
+              <h2>AUTUMN / 2026</h2>
+              <p class="center">SEASONAL GOODS &amp; SMALL CHANGES<br>TRANSACTION: A CHANGE OF SEASON</p>
+              <hr class="rule">
+              <p class="column-label"><span>ITEM</span><span>CHANGE</span></p>
+              <table class="items" aria-label="Seasonal changes">
+                <tbody>
+                  <tr><td>ONE EXTRA LAYER</td><td>+1</td></tr>
+                  <tr><td>DAYLIGHT HOURS</td><td>−2</td></tr>
+                  <tr><td>LEAVES ON YOUR SHOES</td><td>+7</td></tr>
+                  <tr><td>PLANS CANCELLED</td><td>+1</td></tr>
+                  <tr><td>HOT COFFEES</td><td>+3</td></tr>
+                  <tr><td>SUMMER</td><td>−1</td></tr>
+                </tbody>
+              </table>
+              <hr class="rule">
+              <div class="total"><span>TOTAL</span><span>01 SEASON</span></div>
+              <p class="big-total">ANOTHER AUTUMN.</p>
+              <p>PAYMENT: TIME<br>CHANGE: YOU</p>
+              <div class="barcode" aria-hidden="true"></div>
+              <p class="center">09 / KEEP FOR YOUR RECORDS / 10</p>
+            </article>
+            <footer class="foot">
+              <span>AN INVENTORY OF SMALL CHANGES</span><span>09—10</span>
+            </footer>
+          </div>
+
+        </div>
+      </section>
     </div>
   </main>
+
+  <footer class="credits">
+    Photography: <a href="https://www.pexels.com/photo/charming-autumn-street-with-colorful-leaves-29467584/">Thomas Parker</a> / <a href="https://www.pexels.com/photo/coffee-cup-on-top-of-the-book-14818791/">Edanur Aygün</a> / <a href="https://www.pexels.com/photo/dark-rainy-window-with-raindrops-silhouette-29134967/">Nilufar Jabrayilbayli</a> via Pexels. Receipt quantities are fictional.
+  </footer>
 </body>
 </html>
