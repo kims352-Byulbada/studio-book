@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Studio Name</title>
+<title>Eyecandy Design Studio</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
@@ -28,16 +28,13 @@
      The title/by here are only shown until the zine's own page is read (or when you open the site from your computer).
      See HOW-TO-ADD-YOUR-ZINE.md. */
   window.ZINE_SLOTS = [
-    { slot: "spotify",         title: "Fall Wrapped",          by: "Andrew Kim" },
-    { slot: "tim-hortons",     title: "First Frost",           by: "Andrew Kim" },
-    { slot: "member1-zine1",   title: "Zine 1 coming soon",    by: "Member 1" },
-    { slot: "member1-zine2",   title: "Zine 2 coming soon",    by: "Member 1" },
-    { slot: "member2-zine1",   title: "Zine 1 coming soon",    by: "Member 2" },
-    { slot: "member2-zine2",   title: "Zine 2 coming soon",    by: "Member 2" },
-    { slot: "member3-zine1",   title: "Zine 1 coming soon",    by: "Member 3" },
-    { slot: "member3-zine2",   title: "Zine 2 coming soon",    by: "Member 3" },
-    { slot: "member4-zine1",   title: "Zine 1 coming soon",    by: "Member 4" },
-    { slot: "member4-zine2",   title: "Zine 2 coming soon",    by: "Member 4" }
+    { slot: "spotify",         title: "Fall Wrapped",              by: "Andrew Kim" },
+    { slot: "tim-hortons",     title: "First Frost",               by: "Andrew Kim" },
+    { slot: "member1-zine1",   title: "Autumn Receipt",            by: "Bo" },
+    { slot: "member3-zine1",   title: "Trojan: Fall Edition",      by: "Nanda" },
+    { slot: "member4-zine1",   title: "EYECANDY: The Merch Edit",  by: "Ahanaa" }
+    // waiting for: member1-zine2, member2-zine1, member2-zine2, member3-zine2, member4-zine2
+    // when one is ready, add a line here and copy a zine spread below in the Zines section
   ];
 
 </script>
@@ -93,7 +90,7 @@
 
 <header class="nav">
   <!-- Studio name. Swap the text for a logo if you like: <img src="images/logo.svg" alt="Studio Name"> -->
-  <a class="wordmark" href="#" data-home>Studio Name</a>
+  <a class="wordmark" href="#" data-home>Eyecandy Design Studio</a>
   <nav aria-label="Sections">
     <!-- Links are added automatically from the <section data-title="…"> blocks below.
          For an extra link (Instagram, etc.) add an <li><a href="…">…</a></li> here. -->
@@ -145,7 +142,18 @@
 <div id="book-pages" hidden>
 
   <!-- front cover -->
-  <article class="page cover"></article>
+  <article class="page cover">
+    <style>
+      .fc-kick{position:absolute;left:64px;top:64px;margin:0;font-size:18px;letter-spacing:.02em;color:rgba(255,255,255,.6)}
+      .fc-name{position:absolute;left:58px;bottom:250px;margin:0;font-size:190px;font-weight:600;line-height:.82;letter-spacing:-.06em}
+      .fc-line{position:absolute;left:64px;bottom:150px;margin:0;font-size:34px;line-height:1.2;color:rgba(255,255,255,.85)}
+      .fc-ed{position:absolute;left:64px;right:64px;bottom:64px;margin:0;padding-top:16px;border-top:1px solid rgba(255,255,255,.25);font-size:18px;color:rgba(255,255,255,.6);display:flex;justify-content:space-between}
+    </style>
+    <p class="fc-kick">Eyecandy Design Studio</p>
+    <h1 class="fc-name">Eye<br>candy</h1>
+    <p class="fc-line">Design made for the invisible.</p>
+    <p class="fc-ed"><span>The fall merch edition</span><span>2026</span></p>
+  </article>
 
   <!-- Overview: the studio at a glance -->
   <!-- Overview: by Nanda -->
@@ -232,115 +240,37 @@
     <!-- zine: member1-zine1 -->
     <article class="page zine-l" data-zine="member1-zine1">
       <img class="zine-img" src="zines/member1-zine1/thumb.jpg" alt="">
-      <p class="zine-cap"><b class="zt">Zine 1 coming soon</b><span class="zb">Member 1</span></p>
+      <p class="zine-cap"><b class="zt">Autumn Receipt</b><span class="zb">Bo</span></p>
     </article>
     <article class="page zine-r" data-zine="member1-zine1">
       <img class="zine-img" src="zines/member1-zine1/thumb.jpg" alt="">
       <a class="zine-open" href="zines/member1-zine1/index.html">Open zine</a>
     </article>
 
-    <!-- zine: member1-zine2 -->
-    <article class="page zine-l" data-zine="member1-zine2">
-      <img class="zine-img" src="zines/member1-zine2/thumb.jpg" alt="">
-      <p class="zine-cap"><b class="zt">Zine 2 coming soon</b><span class="zb">Member 1</span></p>
-    </article>
-    <article class="page zine-r" data-zine="member1-zine2">
-      <img class="zine-img" src="zines/member1-zine2/thumb.jpg" alt="">
-      <a class="zine-open" href="zines/member1-zine2/index.html">Open zine</a>
-    </article>
-
-    <!-- zine: member2-zine1 -->
-    <article class="page zine-l" data-zine="member2-zine1">
-      <img class="zine-img" src="zines/member2-zine1/thumb.jpg" alt="">
-      <p class="zine-cap"><b class="zt">Zine 1 coming soon</b><span class="zb">Member 2</span></p>
-    </article>
-    <article class="page zine-r" data-zine="member2-zine1">
-      <img class="zine-img" src="zines/member2-zine1/thumb.jpg" alt="">
-      <a class="zine-open" href="zines/member2-zine1/index.html">Open zine</a>
-    </article>
-
-    <!-- zine: member2-zine2 -->
-    <article class="page zine-l" data-zine="member2-zine2">
-      <img class="zine-img" src="zines/member2-zine2/thumb.jpg" alt="">
-      <p class="zine-cap"><b class="zt">Zine 2 coming soon</b><span class="zb">Member 2</span></p>
-    </article>
-    <article class="page zine-r" data-zine="member2-zine2">
-      <img class="zine-img" src="zines/member2-zine2/thumb.jpg" alt="">
-      <a class="zine-open" href="zines/member2-zine2/index.html">Open zine</a>
-    </article>
-
     <!-- zine: member3-zine1 -->
     <article class="page zine-l" data-zine="member3-zine1">
       <img class="zine-img" src="zines/member3-zine1/thumb.jpg" alt="">
-      <p class="zine-cap"><b class="zt">Zine 1 coming soon</b><span class="zb">Member 3</span></p>
+      <p class="zine-cap"><b class="zt">Trojan: Fall Edition</b><span class="zb">Nanda</span></p>
     </article>
     <article class="page zine-r" data-zine="member3-zine1">
       <img class="zine-img" src="zines/member3-zine1/thumb.jpg" alt="">
       <a class="zine-open" href="zines/member3-zine1/index.html">Open zine</a>
     </article>
 
-    <!-- zine: member3-zine2 -->
-    <article class="page zine-l" data-zine="member3-zine2">
-      <img class="zine-img" src="zines/member3-zine2/thumb.jpg" alt="">
-      <p class="zine-cap"><b class="zt">Zine 2 coming soon</b><span class="zb">Member 3</span></p>
-    </article>
-    <article class="page zine-r" data-zine="member3-zine2">
-      <img class="zine-img" src="zines/member3-zine2/thumb.jpg" alt="">
-      <a class="zine-open" href="zines/member3-zine2/index.html">Open zine</a>
-    </article>
-
     <!-- zine: member4-zine1 -->
     <article class="page zine-l" data-zine="member4-zine1">
       <img class="zine-img" src="zines/member4-zine1/thumb.jpg" alt="">
-      <p class="zine-cap"><b class="zt">Zine 1 coming soon</b><span class="zb">Member 4</span></p>
+      <p class="zine-cap"><b class="zt">EYECANDY: The Merch Edit</b><span class="zb">Ahanaa</span></p>
     </article>
     <article class="page zine-r" data-zine="member4-zine1">
       <img class="zine-img" src="zines/member4-zine1/thumb.jpg" alt="">
       <a class="zine-open" href="zines/member4-zine1/index.html">Open zine</a>
     </article>
-
-    <!-- zine: member4-zine2 -->
-    <article class="page zine-l" data-zine="member4-zine2">
-      <img class="zine-img" src="zines/member4-zine2/thumb.jpg" alt="">
-      <p class="zine-cap"><b class="zt">Zine 2 coming soon</b><span class="zb">Member 4</span></p>
-    </article>
-    <article class="page zine-r" data-zine="member4-zine2">
-      <img class="zine-img" src="zines/member4-zine2/thumb.jpg" alt="">
-      <a class="zine-open" href="zines/member4-zine2/index.html">Open zine</a>
-    </article>
   </section>
 
-  <!-- About: who the studio is and how it works -->
-  <section id="about" data-title="About">
-    <article class="page"></article>
-    <article class="page"></article>
-  </section>
 
-  <!-- Work: one spread (2 pages) per project -->
-  <section id="work" data-title="Work">
-    <article class="page"></article>
-    <article class="page"></article>
-    <article class="page"></article>
-    <article class="page"></article>
-    <article class="page"></article>
-    <article class="page"></article>
-    <article class="page"></article>
-    <article class="page"></article>
-  </section>
 
-  <!-- People: the team -->
-  <section id="people" data-title="People">
-    <article class="page"></article>
-    <article class="page"></article>
-    <article class="page"></article>
-    <article class="page"></article>
-  </section>
 
-  <!-- Clients: brands and studios the studio has worked with -->
-  <section id="clients" data-title="Clients">
-    <article class="page"></article>
-    <article class="page"></article>
-  </section>
 
   <!-- Contact: address, email, social -->
   <section id="contact" data-title="Contact">
@@ -396,11 +326,61 @@
 </article>
   </section>
 
+  <!-- Thank you: by Ahanaa (from zines/member4-zine1/thank-you.html) -->
+  <section id="thanks" data-title="Thank you">
+    <article class="page" style="background:#F5F2EC;color:#191919">
+      <style>
+        .ty-season{position:absolute;left:64px;top:64px;margin:0;font:12px/1 Arial,sans-serif;letter-spacing:4px;color:#F13B27}
+        .ty-eyebrow{position:absolute;left:64px;top:330px;margin:0;font:14px/1 Arial,sans-serif;letter-spacing:5px;color:#F13B27}
+        .ty-h{position:absolute;left:52px;top:380px;margin:0;font:normal 250px/.78 Georgia,serif;letter-spacing:-12px}
+        .ty-h span{color:#F13B27}
+        .ty-leaf{position:absolute;top:-60px;font-size:34px;opacity:0;pointer-events:none}
+        @media (prefers-reduced-motion:no-preference){
+          .ty-leaf{animation:ty-fall 7s linear infinite}
+          @keyframes ty-fall{0%{transform:translate(0,0) rotate(0);opacity:0}10%{opacity:.9}50%{transform:translate(60px,600px) rotate(180deg)}90%{opacity:.9}100%{transform:translate(-30px,1240px) rotate(360deg);opacity:0}}
+        }
+      </style>
+      <p class="ty-season">AUTUMN EDITION / 2026</p>
+      <p class="ty-eyebrow">A NOTE FROM THE STUDIO</p>
+      <h2 class="ty-h">Thank<br>you<span>.</span></h2>
+      <span class="ty-leaf" aria-hidden="true" style="left:520px;animation-delay:0s">🍁</span>
+      <span class="ty-leaf" aria-hidden="true" style="left:700px;animation-delay:2.4s;font-size:26px">🍂</span>
+      <span class="ty-leaf" aria-hidden="true" style="left:160px;animation-delay:4.6s;font-size:40px">🍁</span>
+    </article>
+    <article class="page" style="background:#F5F2EC;color:#191919">
+      <style>
+        .ty-msg{position:absolute;left:64px;top:440px;width:520px;margin:0;font:28px/1.6 Arial,sans-serif;color:#55514C}
+        .ty-close{position:absolute;left:64px;right:64px;bottom:64px;margin:0;padding-top:18px;border-top:1px solid #D9D5CC;display:flex;justify-content:space-between;font:13px/1 Arial,sans-serif;letter-spacing:3px;color:#F13B27}
+        .ty-leaf2{position:absolute;top:-60px;font-size:30px;opacity:0;pointer-events:none}
+        @media (prefers-reduced-motion:no-preference){
+          .ty-leaf2{animation:ty-fall2 8s linear infinite}
+          @keyframes ty-fall2{0%{transform:translate(0,0) rotate(0);opacity:0}10%{opacity:.9}50%{transform:translate(-50px,600px) rotate(-160deg)}90%{opacity:.9}100%{transform:translate(40px,1240px) rotate(-340deg);opacity:0}}
+        }
+      </style>
+      <p class="ty-msg">For being part of our creative journey. Here's to the ideas we've shared, the things we've made, and everything still waiting to be created.</p>
+      <p class="ty-close"><span>STAY CURIOUS. KEEP CREATING.</span><span>EYECANDY · 2026</span></p>
+      <span class="ty-leaf2" aria-hidden="true" style="left:640px;animation-delay:1.2s">🍂</span>
+      <span class="ty-leaf2" aria-hidden="true" style="left:300px;animation-delay:3.8s;font-size:38px">🍁</span>
+      <span class="ty-leaf2" aria-hidden="true" style="left:90px;animation-delay:6s;font-size:24px">🍂</span>
+    </article>
+  </section>
+
   <!-- back cover -->
-  <article class="page cover"></article>
+  <article class="page cover">
+    <style>
+      .bc-name{position:absolute;left:64px;bottom:96px;margin:0;font-size:40px;font-weight:600;letter-spacing:-.02em}
+      .bc-line{position:absolute;left:64px;bottom:64px;margin:0;font-size:18px;color:rgba(255,255,255,.6)}
+    </style>
+    <p class="bc-name">Eyecandy Design Studio</p>
+    <p class="bc-line">Design made for the invisible. Fall 2026.</p>
+  </article>
 
 </div>
 
+<script>
+  // a missing image shouldn't show a broken icon in the book
+  addEventListener('error', e => { if (e.target.tagName === 'IMG' && e.target.closest('.page, #book-pages')) e.target.style.visibility = 'hidden'; }, true);
+</script>
 <script src="book.js"></script>
 <!-- Zines strip on pages 4–5 (moving photos). Must stay after book.js. -->
 <script>
@@ -447,7 +427,7 @@
         const doc = new DOMParser().parseFromString(await res.text(), 'text/html');
         const t = doc.querySelector('title'), a = doc.querySelector('meta[name="author"]');
         if (t && t.textContent.trim()) z.title = t.textContent.trim();
-        if (a && a.content.trim()) z.by = a.content.trim();
+        if (a && a.content.trim() && !/^member\s*\d/i.test(a.content.trim())) z.by = a.content.trim();
       } catch (e) { /* opened from the computer: keep the names in ZINE_SLOTS */ }
     }));
     list = list.slice();
